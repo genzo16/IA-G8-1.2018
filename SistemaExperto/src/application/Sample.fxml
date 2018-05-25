@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -7,8 +8,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="803.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <TextFlow fx:id="CLIPSdebug" layoutX="100.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <VBox layoutX="362.0" layoutY="25.0" prefHeight="416.0" prefWidth="430.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" layoutX="25.0" layoutY="25.0" prefHeight="200.0" prefViewportHeight="430.0" prefViewportWidth="590.0" prefWidth="590.0" AnchorPane.bottomAnchor="255.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+               <content>
+                  <TextFlow fx:id="CLIPSdebug" layoutX="100.0" layoutY="150.0" prefHeight="430.0" prefWidth="590.0" style="-fx-border-style: solid inside;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextFlow>
+               </content>
+            </ScrollPane>
+            <ScrollPane hbarPolicy="NEVER" layoutX="25.0" layoutY="239.0" prefHeight="216.0" prefViewportHeight="430.0" prefViewportWidth="590.0" prefWidth="590.0">
+               <content>
+                  <TextFlow fx:id="CLIPSdebug1" layoutX="100.0" layoutY="150.0" prefHeight="300.0" prefWidth="590.0" style="-fx-border-style: solid inside;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextFlow>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <TabPane layoutX="27.0" layoutY="25.0" prefHeight="385.0" prefWidth="325.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Datos paciente">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField id="nombre" fx:id="nombre" layoutX="163.0" layoutY="31.0" text="Fernando" />
+                        <TextField id="apellido" fx:id="apellido" layoutX="163.0" layoutY="63.0" text="Ares" />
+                        <TextField id="edad" fx:id="edad" layoutX="163.0" layoutY="97.0" text="45" />
+                        <ChoiceBox id="sexo" layoutX="163.0" layoutY="131.0" prefWidth="150.0" />
+                        <Label layoutX="14.0" layoutY="35.0" text="Nombre" />
+                        <Label layoutX="14.0" layoutY="67.0" text="Apellido" />
+                        <Label layoutX="15.0" layoutY="101.0" text="Edad" />
+                        <Label layoutX="14.0" layoutY="135.0" text="Sexo" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Descripcion dolor">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="325.0" style="-fx-border-style: solid inside;" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="continuar_paciente" layoutX="277.0" layoutY="416.0" mnemonicParsing="false" text="Continuar" />
+      <Button layoutX="213.0" layoutY="416.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>
