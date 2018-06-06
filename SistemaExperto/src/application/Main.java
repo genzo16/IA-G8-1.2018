@@ -20,8 +20,17 @@ public class Main extends Application
 {
 	Button btnContinuar_paciente;
 	Environment clips;
+	
+	Derby BBDD;
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage)
+	{
+		Runtime.getRuntime().addShutdownHook(new Thread() {            
+			public void run() {                
+				System.out.println("Shutdown Hook is running !");  
+				BBDD.OnShutdown();
+				}       
+			});  
 		try {
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
 			Scene scene = new Scene(root);//,400,400);
@@ -56,6 +65,8 @@ public class Main extends Application
 					System.out.println(resultado);
 					
 			    }});
+			BBDD = new Derby();
+			BBDD.initDB();
 			clips = new Environment();
 			
 			FX_CLIPS_output router = new FX_CLIPS_output("FXrouter");//WTRACE	
@@ -74,7 +85,8 @@ public class Main extends Application
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{  
 		launch(args);
 	}
 }
