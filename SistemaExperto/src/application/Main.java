@@ -5,7 +5,6 @@ import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;

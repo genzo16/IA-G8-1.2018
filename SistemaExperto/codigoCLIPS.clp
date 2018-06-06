@@ -24,12 +24,13 @@
 	(slot fecha)
 	(slot resultado_primera_etapa)
 	(slot resultado_espondilitis(type SYMBOL)
-		(allowed-values nil
-						espondilitis_nula
-						artritis_psoriasica 
-						colitis_ulcerosa
-						espodilo_artritis_juvenil
-						espondilo_artritis_indiferenciada)
+		(allowed-values
+			nil
+			espondilitis_nula
+			artritis_psoriasica 
+			colitis_ulcerosa
+			espodilo_artritis_juvenil
+			espondilo_artritis_indiferenciada)
 		(default nil))
 	(slot grado_de_confianza(type INTEGER)
 		(default 0))
