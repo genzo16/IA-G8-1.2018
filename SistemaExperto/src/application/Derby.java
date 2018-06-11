@@ -1,6 +1,6 @@
 package application;
+
 import java.sql.*;
-import java.util.Properties;
 
 public class Derby {
 
@@ -9,7 +9,7 @@ public class Derby {
 	private String connectionURL;
 	private Connection conn = null;
 	
-	public boolean initDB()
+	private boolean initDB()
 	{
 		driver = "org.apache.derby.jdbc.EmbeddedDriver";
 		dbName="derbyDB";
@@ -34,6 +34,8 @@ public class Derby {
 
 		}  catch (Throwable e)  {  
 		}
+		if(conn == null)
+			return false;
 		
 		// SQL
 		Statement s;
@@ -46,12 +48,27 @@ public class Derby {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	//	psInsert = conn.prepareStatement("insert into WISH_LIST(WISH_ITEM) values (?)");
 		return true;
 	}
 	
-	protected void OnShutdown() 
+	protected boolean initialize()
+	{
+		boolean retValue = false;
+		try {
+			retValue = initDB();
+		} catch (Exception e) {
+			System.out.println("Derby initialize() failed.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		return retValue;
+	}
+	
+	protected void shutdown()
 	{
 		if (driver.equals("org.apache.derby.jdbc.EmbeddedDriver")) 
 		{

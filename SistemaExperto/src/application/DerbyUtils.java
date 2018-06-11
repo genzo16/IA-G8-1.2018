@@ -23,6 +23,7 @@ package application;
 
 import java.io.*;
 import java.sql.*;
+
 public class DerbyUtils {
 
 /*****************
@@ -48,8 +49,8 @@ public class DerbyUtils {
 
 /***      Check for table    ****/
   public static boolean wwdChk4Table (Connection conTst ) throws SQLException {
-     boolean chk = true;
-     boolean doCreate = false;
+     //boolean chk = true;
+     //boolean doCreate = false;
      try {
         Statement s = conTst.createStatement();
         s.execute("update derbyDB set ENTRY_DATE = CURRENT_TIMESTAMP, paciente = 'TEST ENTRY' where 1=3");
