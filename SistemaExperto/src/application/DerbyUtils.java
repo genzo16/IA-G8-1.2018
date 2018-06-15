@@ -49,11 +49,6 @@ public class DerbyUtils {
 
 /***      Check for table    ****/
   public static boolean wwdChk4Table (Connection conTst ) throws SQLException {
-<<<<<<< HEAD
-=======
-     //boolean chk = true;
-     //boolean doCreate = false;
->>>>>>> refs/remotes/origin/master
      try {
         Statement s = conTst.createStatement();
         s.execute("update PACIENTE set ENTRY_DATE = CURRENT_TIMESTAMP, NOMBRE = 'TEST ENTRY' where PACIENTE_ID=1");
