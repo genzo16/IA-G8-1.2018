@@ -24,4 +24,13 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+      <dependency>
+         <groupId>CLIPSJNI</groupId>
+         <artifactId>CLIPSJNI</artifactId>
+         <scope>system</scope>
+         <version>1.0</version>
+         <systemPath>${basedir}\lib\CLIPSJNI.jar</systemPath>
+      </dependency>
+    </dependencies>
 </project>

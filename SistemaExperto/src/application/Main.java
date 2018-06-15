@@ -57,7 +57,7 @@ public class Main extends Application
 					MultifieldValue pv =(MultifieldValue) clips.eval("(find-all-facts((?J diagnostico))TRUE)");
 					try {
 						FactAddressValue fav =(FactAddressValue)pv.get(0);
-						resultado = fav.getFactSlot("resultado_primera_etapa").toString();//resultado_primera_etapa
+						resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}

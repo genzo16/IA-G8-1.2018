@@ -48,11 +48,9 @@ public class DerbyUtils {
 
 /***      Check for table    ****/
   public static boolean wwdChk4Table (Connection conTst ) throws SQLException {
-     boolean chk = true;
-     boolean doCreate = false;
      try {
         Statement s = conTst.createStatement();
-        s.execute("update derbyDB set ENTRY_DATE = CURRENT_TIMESTAMP, paciente = 'TEST ENTRY' where 1=3");
+        s.execute("update PACIENTE set ENTRY_DATE = CURRENT_TIMESTAMP, NOMBRE = 'TEST ENTRY' where PACIENTE_ID=1");
      }  catch (SQLException sqle) {
         String theError = (sqle).getSQLState();
         //   System.out.println("  Utils GOT:  " + theError);
@@ -67,7 +65,7 @@ public class DerbyUtils {
             throw sqle; 
          }
      }
-     //  System.out.println("Just got the warning - table exists OK ");
+     System.out.println("TEST ENTRY updated.");
      return true;
   }  /*** END wwdInitTable  **/
 

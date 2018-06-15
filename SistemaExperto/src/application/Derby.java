@@ -14,12 +14,14 @@ public class Derby {
 		driver = "org.apache.derby.jdbc.EmbeddedDriver";
 		dbName="derbyDB";
 		connectionURL = "jdbc:derby:"+dbName+";create=true";
+		
+        String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE) VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY')";
         
 		String createString = "CREATE TABLE PACIENTE  "
-		        +  "(PACIENTE_ID INT NOT NULL GENERATED ALWAYS AS IDENTITY " 
+		        +  "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
 		        +  "   CONSTRAINT WISH_PK PRIMARY KEY, " 
 		        +  " ENTRY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-		        +  " WISH_ITEM VARCHAR(32) NOT NULL) " ;
+		        +  " NOMBRE VARCHAR(32) NOT NULL) ";
 		
 		// Cargar el driver
 	
@@ -41,13 +43,15 @@ public class Derby {
 			s = conn.createStatement();
 			if (! DerbyUtils.wwdChk4Table(conn))
 			{  
-			   System.out.println (" . . . . creating table");
+			   System.out.println (" . . . . creating table.");
 			   s.execute(createString);
+			   System.out.println (" . . . . inserting TEST ENTRY.");
+			   s.executeUpdate(psInsert);		  
+			   System.out.println ("DB succesfully initiated.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	//	psInsert = conn.prepareStatement("insert into WISH_LIST(WISH_ITEM) values (?)");
 		return true;
 	}
 	
