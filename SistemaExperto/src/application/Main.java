@@ -21,71 +21,100 @@ public class Main extends Application
 	Environment clips;
 	
 	Derby BBDD;
+	
+	Scene scene;
+	
+	@Override
+	public void init()
+	{
+		BBDD = new Derby();
+		if(!BBDD.initialize())
+			BBDD = null;
+		
+		clips = new Environment();
+		clips.watch(Environment.FACTS);
+		clips.watch(Environment.RULES);
+		clips.watch(Environment.STATISTICS);
+		clips.watch(Environment.ACTIVATIONS);
+		
+		clips.load("./codigoCLIPS.clp");
+	}
+	
 	@Override
 	public void start(Stage primaryStage)
 	{
-		Runtime.getRuntime().addShutdownHook(new Thread() {            
-			public void run() {                
-				System.out.println("Shutdown Hook is running !");  
-				BBDD.OnShutdown();
-				}       
-			});  
+		AnchorPane root = null;
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			Scene scene = new Scene(root);//,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-			
-			TextFlow tf = (TextFlow) scene.lookup("#CLIPSdebug");
-			TextFlow tf2 = (TextFlow) scene.lookup("#CLIPSdebug1");
-			btnContinuar_paciente = (Button) scene.lookup("#continuar_paciente");
-			btnContinuar_paciente.setOnAction(new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			    	TextField tfNom = (TextField) scene.lookup("#apellido");
-			    	TextField tfApe = (TextField) scene.lookup("#nombre");
-			    	TextField tfEdad = (TextField) scene.lookup("#edad");
-			    	System.out.println("(paciente(id_paciente 1)(apellido \""+tfNom.getText()+"\")(nombre \""+
-			    			tfApe.getText()+"\")(edad "+tfEdad.getText()+"))");
-			    	clips.assertString("(paciente(id_paciente 1)(apellido \""+tfNom.getText()+"\")(nombre \""+
-			    			tfApe.getText()+"\")(edad "+tfEdad.getText()+"))");
-			    	clips.assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
-			    //	clips.reset();
-					clips.run();
-					String resultado=null;
-					MultifieldValue pv =(MultifieldValue) clips.eval("(find-all-facts((?J diagnostico))TRUE)");
-					try {
-						FactAddressValue fav =(FactAddressValue)pv.get(0);
-						resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					System.out.println(resultado);
-					
-			    }});
-			BBDD = new Derby();
-			BBDD.initDB();
-			clips = new Environment();
-			
-			FX_CLIPS_output router = new FX_CLIPS_output("FXrouter");//WTRACE	
-			router.setTextFlow(tf, tf2);
-			clips.addRouter(router);
-			clips.watch(Environment.FACTS);
-			clips.watch(Environment.RULES);
-			clips.watch(Environment.STATISTICS);
-			clips.watch(Environment.ACTIVATIONS);
-			
-			clips.load("./codigoCLIPS.clp");
-			
-			
-		} catch(Exception e) {
+			root = (AnchorPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
+		} catch (Exception e) {
+			System.out.println("Failure loading Sample.fxml");
 			e.printStackTrace();
+			return;
 		}
+		
+		scene = new Scene(root);//,400,400);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		TextFlow tf = (TextFlow) scene.lookup("#CLIPSdebug");
+		TextFlow tf2 = (TextFlow) scene.lookup("#CLIPSdebug1");
+		
+		FX_CLIPS_output router = new FX_CLIPS_output("FXrouter");//WTRACE
+		router.setTextFlow(tf, tf2);
+		clips.addRouter(router);
+		
+		btnContinuar_paciente = (Button) scene.lookup("#continuar_paciente");
+		
+		btnContinuar_paciente.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	onSubmit();
+				
+		    }});
+			
+	}
+	
+	public void onSubmit()
+	{
+		String nombre   = ((TextField) scene.lookup("#apellido")).getText();
+    	String apellido = ((TextField) scene.lookup("#nombre")).getText();
+    	String edad     = ((TextField) scene.lookup("#edad")).getText();
+    	
+    	String entrada = "(paciente(id_paciente 1)(apellido \"" + apellido + "\")(nombre \"" + nombre + "\")(edad " + edad + "))";
+    	//System.out.println(entrada);
+    	clips.assertString(entrada);
+    	
+    	clips.assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
+    //	clips.reset();
+		clips.run();
+		String resultado=null;
+		MultifieldValue pv =(MultifieldValue) clips.eval("(find-all-facts((?J diagnostico))TRUE)");
+		try {
+			FactAddressValue fav =(FactAddressValue)pv.get(0);
+			resultado = fav.getFactSlot("resultado_primera_etapa").toString();//resultado_primera_etapa
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		// TODO: mostrar esta salida via javaFX
+		System.out.println(resultado);
+	}
+	
+	@Override
+	public void stop()
+	{
+		// This function is called when exiting the application.
+		// All the exit cleanup should be in this function.
+		//System.out.println(" JavaFX stop()");
+		
+		if(BBDD != null)
+			BBDD.shutdown();
+		if(clips != null)
+			clips.destroy();
 	}
 	
 	public static void main(String[] args) 
-	{  
-		launch(args);
+	{
+		Application.launch(args);
 	}
 }
