@@ -1,0 +1,49 @@
+
+FEATURES:
+- guardar/cargar pacientes (via DNI?)
+
+
+- Pestañas:
+	- Clips
+	- Perfiles Guardados
+	- Logs
+
+
+- Botones:
+	- Nuevo
+	- Abrir
+	
+	- Limpiar
+	- Guardar	(con fecha actual)
+	- Correr
+
+- Entradas de usuario:
+	- DNI
+	- Nombre / Apellido
+	- Edad
+	- Fecha (de cuando fue guardado el perfil de paciente)
+	- Sexo
+	- Dolor
+		- Lugar
+		- Recurrencia
+		- Inicio
+		- Alivio
+	- Enfermedades preexistentes	(combo box)
+	- Antecedentes familiares
+		- Parentesco
+		- Enfermedades (pre-existentes, combo box)
+	- Estudios (check box, más combo box?)
+		- HLA-27 (análisis de sangre)
+		- Radiografía
+		- Resonancia
+
+- Salida de programa:
+	- Diagnóstico / o pedido de estudios (+ pre-diagnostico)
+	- Nivel de certeza (alto, medio, bajo)
+
+
+
+
+
+
+
