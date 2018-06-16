@@ -7,8 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -28,9 +27,9 @@
                         <TextField fx:id="last_edit" disable="true" editable="false" layoutX="398.0" layoutY="74.0" text="15/06/2018" />
                         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="300.0" layoutY="78.0" prefHeight="17.0" prefWidth="85.0" text="Fecha Modificación" />
                         <ChoiceBox fx:id="sexo" layoutX="398.0" layoutY="44.0" prefWidth="150.0" />
-                        <Button layoutX="432.0" layoutY="298.0" mnemonicParsing="false" text="Correr CLIPS" />
-                        <Button layoutX="422.0" layoutY="246.0" mnemonicParsing="false" text="Limpiar pantalla" />
-                        <Button layoutX="300.0" layoutY="246.0" mnemonicParsing="false" text="Guardar" />
+                        <Button layoutX="432.0" layoutY="298.0" mnemonicParsing="false" onAction="#onAdvance" text="Correr CLIPS" />
+                        <Button layoutX="422.0" layoutY="246.0" mnemonicParsing="false" onAction="#onClear" text="Limpiar pantalla" />
+                        <Button layoutX="300.0" layoutY="246.0" mnemonicParsing="false" onAction="#onSave" text="Guardar" />
                      </children>
                   </AnchorPane>
                </content>
@@ -60,12 +59,12 @@
                      <children>
                         <ScrollPane prefHeight="371.0" prefWidth="300.0">
                            <content>
-                              <TextFlow prefHeight="500.0" prefWidth="290.0" />
+                              <TextFlow fx:id="CLIPSdebug1" prefHeight="500.0" prefWidth="290.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane prefHeight="371.0" prefWidth="300.0">
                            <content>
-                              <TextFlow prefHeight="500.0" prefWidth="290.0" />
+                              <TextFlow fx:id="CLIPSdebug2" prefHeight="500.0" prefWidth="290.0" />
                            </content>
                         </ScrollPane>
                      </children>
