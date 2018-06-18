@@ -40,6 +40,8 @@ public class Main extends Application
 	void onAdvance(ActionEvent event) {
 		System.out.println("onAdvance");
 		
+		Perfil p = guiHandler.getData(scene);
+		
 		String nombre   = this.nombre.getText();
     	String apellido = this.apellido.getText();
     	String edad     = this.edad.getText();
