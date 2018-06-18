@@ -95,7 +95,7 @@ public class Main extends Application
 	{
 		//System.out.println("JavaFX start()");
 		
-		URL url = getClass().getResource("gui.fxml");
+		URL url = getClass().getResource("gui_tabbed.fxml");
 		AnchorPane pane = null;
 		try {
 			pane =(AnchorPane)FXMLLoader.load(url);
