@@ -8,6 +8,23 @@ public class Derby {
 	private String dbName;
 	private String connectionURL;
 	private Connection conn = null;
+	static private Derby instance = null;
+	
+	static public Derby getInstance()
+	{
+		if(instance == null)
+			instance = new Derby();
+		return instance;
+	}
+	
+	private Derby() {};
+	
+	public Connection getConnection() throws SQLException
+	{
+		if(conn == null)
+			 conn = DriverManager.getConnection(connectionURL);
+		return conn;
+	}
 	
 	private boolean initDB()
 	{
@@ -15,13 +32,19 @@ public class Derby {
 		dbName="derbyDB";
 		connectionURL = "jdbc:derby:"+dbName+";create=true";
 		
-        String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE) VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY')";
+        String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE, APELLIDO, DNI, EDAD, FECHA, SEXO) "
+        		+ "VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY','NONE','NONE',0, CURRENT_DATE,'MASCULINO')";
         
 		String createString = "CREATE TABLE PACIENTE  "
 		        +  "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
 		        +  "   CONSTRAINT WISH_PK PRIMARY KEY, " 
 		        +  " ENTRY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-		        +  " NOMBRE VARCHAR(32) NOT NULL) ";
+		        +  " NOMBRE VARCHAR(32) NOT NULL,"
+		        + "APELLIDO VARCHAR(32) NOT NULL,"
+		        + "DNI VARCHAR(32) NOT NULL,"
+		        + "EDAD INTEGER NOT NULL,"
+		        + "FECHA DATE NOT NULL,"
+		        + "SEXO VARCHAR(32) NOT NULL) ";
 		
 		// Cargar el driver
 	
@@ -32,7 +55,7 @@ public class Derby {
 		
 		// Iniciar base de datos
 		try {
-		   conn = DriverManager.getConnection(connectionURL);
+		   conn =  getConnection();
 
 		}  catch (Throwable e)  {  
 		}

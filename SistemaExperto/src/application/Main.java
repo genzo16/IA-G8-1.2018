@@ -2,12 +2,14 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import model.Paciente;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -57,7 +59,7 @@ public class Main extends Application
 		
 		try {
 			FactAddressValue fav =(FactAddressValue)pv.get(0);
-			resultado = fav.getFactSlot("resultado_primera_etapa").toString();//resultado_primera_etapa
+			resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
 		} catch (Exception e1) {
 			System.out.println("Failure with CLIPS output.");
 			//e1.printStackTrace();
@@ -82,11 +84,16 @@ public class Main extends Application
 	public void init()
 	{
 		//System.out.println("JavaFX init()");
-		
-		BBDD = new Derby();
+		BBDD = Derby.getInstance();
 		if(!BBDD.initialize())
 			BBDD = null;
-		
+		try {
+			Paciente p = Paciente.Load(1);
+			System.out.println(p.Nombre+" "+p.getFecha());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ClipsHandler.init();
 	}
 	
