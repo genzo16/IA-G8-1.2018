@@ -333,9 +333,9 @@
                                                             <CheckBox fx:id="ante_colitis_ulcerosa2" mnemonicParsing="false" text="Colitis Ulcerosa" />
                                                             <CheckBox fx:id="ante_anqui" mnemonicParsing="false" text="Espondilitis Anquilosante" />
                                                             <CheckBox fx:id="ante_reactiva" mnemonicParsing="false" text="Artritis Reactiva" />
-                                                            <CheckBox fx:id="ante_artitis_pso" mnemonicParsing="false" text="Artritis Psoriasica" />
+                                                            <CheckBox fx:id="ante_artritis_pso" mnemonicParsing="false" text="Artritis Psoriasica" />
                                                             <CheckBox fx:id="ante_indif" mnemonicParsing="false" text="Espondilitis Indiferenciada" />
-                                                            <CheckBox fx:id="andte_juv" mnemonicParsing="false" text="Espondilitis Juvenil" />
+                                                            <CheckBox fx:id="ante_juv" mnemonicParsing="false" text="Espondilitis Juvenil" />
                                                             <CheckBox fx:id="ante_reuma" mnemonicParsing="false" text="Artritis Reumatoide" />
                                                          </children>
                                                       </VBox>
