@@ -1,14 +1,7 @@
 package model;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
 
-import application.Derby;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -52,6 +45,10 @@ public class Paciente implements GUIFriendly {
 		Sexo = sexo;
 	}
 	
+	public Paciente() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void grabFromGUI() {
 		DNI = dniFX.getText();
 		Nombre = nombreFX.getText();
@@ -76,42 +73,6 @@ public class Paciente implements GUIFriendly {
 		edadFX.setText(String.valueOf(Edad));
 		//fechaFX.setText(Fecha.toString());
 		sexoFX.setValue(Sexo);
-	}
-
-	static public Paciente Load(Integer idPaciente) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		PreparedStatement s;
-		ResultSet rs=null;
-		Paciente rPac = null;
-		try {
-			s = conn.prepareStatement("select * from paciente where paciente_id = ?");
-			s.setInt(1, idPaciente);
-			rs = s.executeQuery();
-			rs.next();
-			rPac = new Paciente(rs.getInt("paciente_id"), rs.getString("dni"), rs.getString("nombre"), rs.getString("apellido"),
-					rs.getInt("edad"), rs.getDate("fecha"), rs.getString("sexo"));
-			System.out.println (rs.getString("NOMBRE"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return rPac;
-	}
-	
-	static public int Save(Paciente paciente) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		Statement s;
-		int rs=0;
-		try {
-			s = conn.createStatement();
-			rs = s.executeUpdate("select * from paciente where paciente_id = 1");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return rs;
-		}
-		return rs;
 	}
 	
 	/* Getters & Setters */

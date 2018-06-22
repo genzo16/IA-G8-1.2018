@@ -64,35 +64,4 @@ public abstract class Analisis
 		this.resultado = resultado;
 	}
 
-	static public Paciente Load(Integer idAnalisis) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		Statement s;
-		ResultSet rs=null;
-		try {
-			s = conn.createStatement();
-			rs = s.executeQuery("select * from analisis where paciente_id = 1");
-			rs.next();
-			System.out.println (rs.getString("NOMBRE"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return null;
-	}
-	
-	static public int Save(Analisis analisis) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		Statement s;
-		int rs=0;
-		try {
-			s = conn.createStatement();
-			rs = s.executeUpdate("select * from paciente where paciente_id = 1");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return rs;
-		}
-		return rs;
-	}
 }

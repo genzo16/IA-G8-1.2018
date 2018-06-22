@@ -1,12 +1,5 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import application.Derby;
-
 public class Diagnostico 
 {
 	private int id_diagnostico;
@@ -54,35 +47,5 @@ public class Diagnostico
 		this.enfermedad = enfermedad;
 	}
 
-	static public Paciente Load(Integer idDiagnostico) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		Statement s;
-		ResultSet rs=null;
-		try {
-			s = conn.createStatement();
-			rs = s.executeQuery("select * from paciente where paciente_id = 1");
-			rs.next();
-			System.out.println (rs.getString("NOMBRE"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return null;
-	}
-	
-	static public int Save(Diagnostico diagnostico) throws SQLException
-	{
-		Connection conn = Derby.getInstance().getConnection();
-		Statement s;
-		int rs=0;
-		try {
-			s = conn.createStatement();
-			rs = s.executeUpdate("select * from paciente where paciente_id = 1");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return rs;
-		}
-		return rs;
-	}
+
 }

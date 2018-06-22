@@ -32,5 +32,12 @@
          <version>1.0</version>
          <systemPath>${basedir}\lib\CLIPSJNI.jar</systemPath>
       </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+	<dependency>
+	    <groupId>org.apache.derby</groupId>
+	    <artifactId>derby</artifactId>
+	    <version>10.14.2.0</version>
+	    <scope>provided</scope>
+	</dependency>
     </dependencies>
 </project>

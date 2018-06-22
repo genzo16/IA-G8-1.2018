@@ -2,7 +2,10 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
@@ -72,11 +75,30 @@ public class Main extends Application
 	@FXML
 	void onClear(ActionEvent event) {
 		System.out.println("onClear");
+		Paciente p = null;
+		try {
+			p= DerbyUtils.LoadPaciente(2);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(p.DNI+"\n"+p.getNombre()+" "+p.getApellido()+"\n"+p.getSexo()+"\n"+p.Edad+"\n"+p.Fecha);
 	}
 	
 	@FXML
 	void onSave(ActionEvent event) {
 		System.out.println("onSave");
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+		Paciente p = new Paciente(0,"12.123.123","Rafael","Aylas",32,date,"Masculino");
+//		p.grabFromGUI();
+		try {
+			DerbyUtils.SavePaciente(p);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -88,7 +110,7 @@ public class Main extends Application
 		if(!BBDD.initialize())
 			BBDD = null;
 		try {
-			Paciente p = Paciente.Load(1);
+			Paciente p = DerbyUtils.LoadPaciente(1);
 			System.out.println(p.Nombre+" "+p.getFecha());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

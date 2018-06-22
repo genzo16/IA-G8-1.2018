@@ -24,6 +24,8 @@ package application;
 import java.io.*;
 import java.sql.*;
 
+import model.Paciente;
+
 public class DerbyUtils {
 
 /*****************
@@ -70,6 +72,63 @@ public class DerbyUtils {
      return true;
   }  /*** END wwdInitTable  **/
 
+	static public Paciente LoadPaciente(Integer idPaciente) throws SQLException
+	{
+		Connection conn = Derby.getInstance().getConnection();
+		PreparedStatement s;
+		ResultSet rs=null;
+		Paciente rPac = null;
+		try {
+			s = conn.prepareStatement("select * from paciente where paciente_id = ?");
+			s.setInt(1, idPaciente);
+			rs = s.executeQuery();
+			rs.next();
+			rPac = new Paciente(rs.getInt("paciente_id"), rs.getString("dni"), rs.getString("nombre"), rs.getString("apellido"),
+					rs.getInt("edad"), rs.getDate("fecha"), rs.getString("sexo"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return rPac;
+	}
+	
+	static public int SavePaciente(Paciente p) throws SQLException
+	{
+		Connection conn = Derby.getInstance().getConnection();
+		PreparedStatement ps;
+		int rs = 0;
+		try {
+			if(p.getId_paciente()==0)
+			{
+				// insert
+				ps = conn.prepareStatement("INSERT INTO Paciente (dni,nombre,apellido,edad,fecha,sexo) VALUES (?,?,?,?,?,?)");
+				System.out.println(ps.toString());
+				ps.setString(1, p.getDNI());//dni
+				ps.setString(2, p.getNombre());//nombre
+				ps.setString(3, p.getApellido());//apellido
+				ps.setInt(4, p.getEdad());//edad
+				ps.setDate(5, p.getFecha());//fecha
+				ps.setString(6, p.getSexo());//sexo
+				rs = ps.executeUpdate();
+			}else{
+				// update
+				ps = conn.prepareStatement("UPDATE Paciente SET dni=?,nombre=?,apellido=?,edad=?,fecha=?,sexo=? WHERE paciente_id = ?");
+				ps.setString(1, p.getDNI());//dni
+				ps.setString(2, p.getNombre());//nombre
+				ps.setString(3, p.getApellido());//apellido
+				ps.setInt(4, p.getEdad());//edad
+				ps.setDate(5, p.getFecha());//fecha
+				ps.setString(6, p.getSexo());//sexo
+				ps.setInt(7, p.getId_paciente());//nro afiliado
+				rs = ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return rs;
+		}
+		return rs;
+	}
+  
 
   public static void main  (String[] args) {
   // This method allows stand-alone testing of the getItem method
