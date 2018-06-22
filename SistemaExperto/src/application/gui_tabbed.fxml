@@ -284,7 +284,7 @@
                                                                <String fx:id="diarrea" fx:value="Diarrea" />
                                                                <String fx:id="moco" fx:value="Moco" />
                                                                <String fx:id="pus" fx:value="Pus" />
-                                                               <String fx:id="ritmo_sangre" fx:value="sangre" />
+                                                               <String fx:id="ritmo_sangre" fx:value="Sangre" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>

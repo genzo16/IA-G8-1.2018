@@ -8,6 +8,8 @@ public class Sintomas implements GUIFriendly {
 	@FXML // fx:id="ritmo"
 	private static ChoiceBox<String> ritmoFX;
 	
+	public String ritmo;
+	
 	public Dolencia d1;
 	public Dolencia d2;
 	public Dolencia d3;
@@ -22,6 +24,8 @@ public class Sintomas implements GUIFriendly {
 		d1.grabFromGUI();
 		d2.grabFromGUI();
 		d3.grabFromGUI();
+		
+		ritmo = ritmoFX.getValue();
 	}
 	
 	public void pushToGUI() {
@@ -29,5 +33,6 @@ public class Sintomas implements GUIFriendly {
 		d2.pushToGUI();
 		d3.pushToGUI();
 		
+		ritmoFX.setValue(ritmo);
 	}
 }
