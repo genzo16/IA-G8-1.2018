@@ -35,16 +35,38 @@ public class Derby {
         String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE, APELLIDO, DNI, EDAD, FECHA, SEXO) "
         		+ "VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY','NONE','NONE',0, CURRENT_DATE,'MASCULINO')";
         
-		String createString = "CREATE TABLE PACIENTE  "
-		        +  "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
-		        +  "   CONSTRAINT WISH_PK PRIMARY KEY, " 
-		        +  " ENTRY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-		        +  " NOMBRE VARCHAR(32) NOT NULL,"
+		String ctPaciente = "CREATE TABLE PACIENTE  "
+		        + "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
+		        + "CONSTRAINT PACIENTE_PK PRIMARY KEY, " 
+		        + "ENTRY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+		        + "NOMBRE VARCHAR(32) NOT NULL,"
 		        + "APELLIDO VARCHAR(32) NOT NULL,"
 		        + "DNI VARCHAR(32) NOT NULL,"
 		        + "EDAD INTEGER NOT NULL,"
 		        + "FECHA DATE NOT NULL,"
-		        + "SEXO VARCHAR(32) NOT NULL) ";
+		        + "SEXO VARCHAR(32) NOT NULL)";
+		String ctDolor = "CREATE TABLE DOLOR "
+		        + "(DOLOR_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+		        + "CONSTRAINT DOLOR_PK PRIMARY KEY, "
+		        + "ZONA VARCHAR(32) NOT NULL, "
+		        + "TIPO VARCHAR(32) NOT NULL) ";
+		String ctAnalisis = "CREATE TABLE ANALISIS "
+		        + "(ANALISIS_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+		        + "CONSTRAINT ANALISIS_PK PRIMARY KEY, "
+		        + "NOMBRE VARCHAR(32) NOT NULL, "
+		        + "TIPO_ANALISIS VARCHAR(32) NOT NULL, "
+		        + "RESULTADO VARCHAR(32) NOT NULL)";
+		String ctAntecedente = "CREATE TABLE ANTECEDENTE "
+		        + "(ANTECEDENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+		        + "CONSTRAINT ANTECEDENTE_PK PRIMARY KEY, "
+		        + "ENFERMEDAD VARCHAR(32) NOT NULL, "
+		        + "TIPO_ANTECEDENTE VARCHAR(32) NOT NULL)";
+		String ctDiagnostico = "CREATE TABLE DIAGNOSTICO "
+		        + "(DIAGNOSTICO_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+		        + "CONSTRAINT DIAGNOSTICO_PK PRIMARY KEY, "
+		        + "ESSPAX VARCHAR(32) NOT NULL, "
+		        + "RECOMENDACION VARCHAR(32) NOT NULL, "
+		        + "ENFERMEDAD VARCHAR(32) NOT NULL) ";
 		
 		// Cargar el driver
 	
@@ -68,8 +90,16 @@ public class Derby {
 			s = conn.createStatement();
 			if (! DerbyUtils.wwdChk4Table(conn))
 			{  
-			   System.out.println (" . . . . creating table.");
-			   s.execute(createString);
+			   System.out.println (" . . . . creating table Paciente.");
+			   s.execute(ctPaciente);
+			   System.out.println (" . . . . creating table Analisis.");
+			   s.execute(ctAnalisis);
+			   System.out.println (" . . . . creating table Dolor.");
+			   s.execute(ctDolor);
+			   System.out.println (" . . . . creating table Antecedente.");
+			   s.execute(ctAntecedente);
+			   System.out.println (" . . . . creating table Diagnostico.");
+			   s.execute(ctDiagnostico);
 			   System.out.println (" . . . . inserting TEST ENTRY.");
 			   s.executeUpdate(psInsert);		  
 			   System.out.println ("DB succesfully initiated.");
