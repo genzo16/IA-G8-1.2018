@@ -22,6 +22,9 @@
 	(slot id_paciente)
 	(slot id_diagnostico)
 	(slot fecha)
+	(slot derivacion (default null))
+	(slot estudio_solicitado (default ninguno))
+	(slot dolor_lumbar_inflamatorio (default inexistente))
 	(slot resultado (default null))
 	(slot resultado_espondilitis(type SYMBOL)
 		(allowed-values null
@@ -129,15 +132,31 @@
 
 (defrule articular
 	?dolor<-(dolor(id_diagnostico ?id)(tipo null)(zona articular))
-	(enfermedades_preexistentes(enfermedad dactilitis | entesitis))
-	(diagnostico(id_diagnostico ?id)(resultado null))
-=>(modify ?dolor (tipo "articular")))
+	(enfermedades_preexistentes(enfermedad $?enf))
+	?diag<-(diagnostico(id_diagnostico ?id)(resultado null))
+=>(bind ?flag 0)
+	(foreach  ?e $?enf 
+	(if (and (or (eq ?e dactilitis) (eq ?e entesitis))(!= ?flag 1))
+		then (modify ?dolor (tipo "articular"))(bind ?flag 1)
+	))
+	(if (= ?flag 0)
+		then (modify ?diag (resultado "derivar")) // reumatologo
+	)
+)
 
 (defrule intestinal
 	?dolor<-(dolor(id_diagnostico ?id)(tipo null)(zona intestinal))
-	(enfermedades_preexistentes(enfermedad diarrea))
-	(diagnostico(id_diagnostico ?id)(resultado null))
-=>(modify ?dolor (tipo "intestinal")))
+	(enfermedades_preexistentes(enfermedad $?enf))
+	?diag<-(diagnostico(id_diagnostico ?id)(resultado null))
+=>(bind ?flag 0)
+	(foreach  ?e $?enf 
+	(if (and (eq ?e diarrea)(!= ?flag 1))
+		then (modify ?dolor (tipo "intestinal"))(bind ?flag 1)
+	))
+	(if (= ?flag 0)
+		then (modify ?diag (resultado "derivar"))//gastroenterologo
+	)
+)
 
 (defrule ocular
 	?dolor<-(dolor(id_diagnostico ?id)(tipo null)(zona ocular))
@@ -149,7 +168,7 @@
 		then (modify ?dolor (tipo "ocular"))(bind ?flag 1)
 	))
 	(if (= ?flag 0)
-		then (modify ?diag (resultado "derivar oculista"))
+		then (modify ?diag (resultado "derivar"))//oculista
 	)
 )
 
@@ -163,9 +182,23 @@
 		then (modify ?dolor (tipo "enrojecimiento_manchas"))(bind ?flag 1)
 	))
 	(if (= ?flag 0)
-		then (modify ?diag (resultado "derivar medico general"))
+		then (modify ?diag (resultado "derivar"))//dermatologo
 	)
 )
+; DERIVACION
+(defrule derivar
+	(dolor(id_diagnostico ?id)(zona ?z_dolor))
+	?diag<-(diagnostico(id_diagnostico ?id)(resultado "derivar"))
+=>(switch ?z_dolor
+		(case articular then (bind ?return-value "reumatologo"))
+		(case intestinal then (bind ?return-value "gastroenterologo"))
+		(case ocular then (bind ?return-value "oculista"))
+		(case enrojecimiento_manchas then (bind ?return-value "dermatologo"))
+		(default then (bind ?return-value "medico general"))
+	)
+	(modify ?diag (resultado "derivacion")(derivacion ?return-value))
+)
+
 ;---------------------------------------------------------------------
 (defrule evaluar_antecedentes_articular
 	(paciente(edad ?x)(id_paciente ?id))

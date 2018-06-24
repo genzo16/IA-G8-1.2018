@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -103,6 +104,19 @@ public class Main extends Application
 	private TextField sangre_pcr;
 	@FXML
 	private TextField sangre_ers;
+	//-------------------------------------------------------------------------------
+	@FXML
+	private Label diagnostico;
+	@FXML
+	private Label sospecha;
+	@FXML
+	private Label derivacion;
+	@FXML
+	private Label estudio_solicitado;
+	@FXML
+	private Label dolor_si_no;
+	@FXML
+	private Label antecedente_si_no;
 	
 	@FXML
 	void onAdvance(ActionEvent event) 
@@ -139,9 +153,13 @@ public class Main extends Application
 			
 			// TODO: mostrar esta salida via javaFX
 			System.out.println(resultado);
-			ClipsHandler.getInstance().eval("(facts)");
-			tabContainer.getSelectionModel().select(1);
-			pestaña = 1;// ->pestaña Sintomas
+		/*	if(resultado.equals("derivacion"))
+			{
+				
+			}else {*/
+				ClipsHandler.getInstance().eval("(facts)");
+				tabContainer.getSelectionModel().select(1);
+				pestaña = 1;// ->pestaña Sintomas
 			break;
 		case 1:
 		//	Dolencia1 d1 = new Dolencia1();
@@ -167,8 +185,16 @@ public class Main extends Application
 			ClipsHandler.getInstance().eval("(facts)");
 			// TODO: mostrar esta salida via javaFX
 			System.out.println(resultado);
-			tabContainer.getSelectionModel().select(2);
-			pestaña = 2;// ->pestaña Antecedentes
+			
+			if(resultado.equals("derivacion"))
+			{
+				onMostrarResultados();
+				tabContainer.getSelectionModel().select(4);
+				pestaña = 4;// ->pestaña Resultados
+			}else {
+				tabContainer.getSelectionModel().select(2);
+				pestaña = 2;// ->pestaña Antecedentes
+			}
 			break;
 		case 2:
 		    String enfermedades = "";
@@ -231,10 +257,19 @@ public class Main extends Application
 			ClipsHandler.getInstance().eval("(facts)");
 			// TODO: mostrar esta salida via javaFX
 			System.out.println(resultado);
-			
+			System.out.println("\"derivacion\"");
 			//TODO: Definir si va a resultados o estudios
-			tabContainer.getSelectionModel().select(3);
-			pestaña = 3;// ->pestaña Estudios
+			
+			
+			if(resultado.equals("\"derivacion\""))
+			{
+				onMostrarResultados();
+				tabContainer.getSelectionModel().select(4);
+				pestaña = 4;// ->pestaña Resultados
+			}else {
+				tabContainer.getSelectionModel().select(3);
+				pestaña = 3;// ->pestaña Estudios
+			}
 			break;
 		case 3:
 			if(gen.isSelected())
@@ -271,12 +306,49 @@ public class Main extends Application
 			// TODO: mostrar esta salida via javaFX
 			System.out.println(resultado);
 			
+			onMostrarResultados();
 			tabContainer.getSelectionModel().select(4);
 			pestaña = 4;// ->pestaña resultados
 			break;
 		default:
 		}
 		
+	}
+	
+	private void onMostrarResultados()
+	{
+		MultifieldValue pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");	
+		try {
+			FactAddressValue fav =(FactAddressValue)pv.get(0);
+			String spax = fav.getFactSlot("resultado").toString().replaceAll("\"", "");
+			if(spax.equals("null"))
+				diagnostico.setText("indeterminado");
+			else
+				diagnostico.setText(spax);
+			sospecha.setText(fav.getFactSlot("grado_de_confianza").toString());
+			derivacion.setText(fav.getFactSlot("derivacion").toString().replaceAll("\"", ""));
+			estudio_solicitado.setText(fav.getFactSlot("estudio_solicitado").toString().replaceAll("\"", ""));
+			dolor_si_no.setText(fav.getFactSlot("dolor_lumbar_inflamatorio").toString().replaceAll("\"", ""));
+			antecedente_si_no.setText("ninguno");
+		} catch (Exception e1) {
+			System.out.println("Failure with CLIPS output.");
+			//e1.printStackTrace();
+		}
+		
+		pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J antecedente_familiar))TRUE)");	
+		try {
+			FactAddressValue fav =(FactAddressValue)pv.get(0);
+			String antec="";
+			antec = (fav.getFactSlot("enfermedad")).multifieldValue().toString();
+			if(antec.equals("[]"))
+				antecedente_si_no.setText("ninguno");
+			else
+				antecedente_si_no.setText(antec);
+			
+		} catch (Exception e1) {
+			System.out.println("Failure with CLIPS output.");
+			//e1.printStackTrace();
+		}
 	}
 	
 	@FXML
