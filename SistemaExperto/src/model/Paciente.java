@@ -134,4 +134,17 @@ public class Paciente implements GUIFriendly {
 		Sexo = sexo;
 	}
 
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getId_paciente()+" - "+getApellido()+", "+getNombre();
+	}
+
+	
 }

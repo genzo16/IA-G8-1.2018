@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -36,6 +37,13 @@
                                                 <FXCollections fx:factory="observableArrayList">
                                                    <String fx:id="femenino" fx:value="Femenino" />
                                                    <String fx:id="masculino" fx:value="Masculino" />
+                                                </FXCollections>
+                                             </items>
+                                          </ChoiceBox>
+                                          <Button fx:id="cargar" layoutX="293.0" layoutY="221.0" mnemonicParsing="false" onAction="#onCargar" text="Cargar" />
+                                          <ChoiceBox fx:id="lPacientes" layoutX="131.0" layoutY="221.0" prefWidth="150.0">
+                                             <items>
+                                                  <FXCollections fx:factory="observableArrayList">
                                                 </FXCollections>
                                              </items>
                                           </ChoiceBox>

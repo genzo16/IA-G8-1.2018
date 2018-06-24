@@ -23,6 +23,8 @@ package application;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Paciente;
 
@@ -90,6 +92,28 @@ public class DerbyUtils {
 			return null;
 		}
 		return rPac;
+	}
+	
+	static public List<Paciente> LoadPacientes() throws SQLException
+	{
+		List<Paciente> lPacientes = new ArrayList<Paciente>();
+		Connection conn = Derby.getInstance().getConnection();
+		PreparedStatement s;
+		ResultSet rs=null;
+		Paciente rPac = null;
+		try {
+			s = conn.prepareStatement("select * from paciente");
+			rs = s.executeQuery();
+			while(rs.next())
+			{
+				lPacientes.add(new Paciente(rs.getInt("paciente_id"), rs.getString("dni"), rs.getString("nombre"), rs.getString("apellido"),
+					rs.getInt("edad"), rs.getDate("fecha"), rs.getString("sexo")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return lPacientes;
 	}
 	
 	static public int SavePaciente(Paciente p) throws SQLException

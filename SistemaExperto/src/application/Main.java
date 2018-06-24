@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
 import javafx.application.Application;
@@ -48,6 +49,9 @@ public class Main extends Application
 	private TextField edad;
 	@FXML // fx:id="sexo"
 	private ChoiceBox<String> sexo;
+	
+	@FXML
+	private ChoiceBox<Paciente> lPacientes;
 	//-------------------------------------------------------------------------------
 	@FXML // fx:id="dolencia1"
 	private ChoiceBox<String> dolencia1;
@@ -117,6 +121,31 @@ public class Main extends Application
 	private Label dolor_si_no;
 	@FXML
 	private Label antecedente_si_no;
+	
+	@FXML
+	void onCargar(ActionEvent event) 
+	{
+		Paciente actual = lPacientes.getSelectionModel().getSelectedItem();
+		apellido.setText(actual.getApellido());
+		nombre.setText(actual.getNombre());
+		edad.setText(actual.getEdad().toString());
+		if(actual.getSexo().equals("masculino"))
+			sexo.getSelectionModel().select(1);
+		else
+			sexo.getSelectionModel().select(2);
+	}
+	
+	@FXML
+	void onAbrirSeleccion(ActionEvent event) 
+	{
+		try {
+			lPacientes.getItems().clear();
+			for(Paciente p :DerbyUtils.LoadPacientes())
+				lPacientes.getItems().add(p);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@FXML
 	void onAdvance(ActionEvent event) 
@@ -355,19 +384,8 @@ public class Main extends Application
 	void onClear(ActionEvent event) {
 		System.out.println("onClear");
 		ClipsHandler.getInstance().reset();
-	//	ClipsHandler.getInstance().clear();
 		tabContainer.getSelectionModel().select(0);
 		pestaña = 0;// ->pestaña Estudios
-		//tf1.getChildren().remove(arg0)
-		
-/*		Paciente p = null;
-		try {
-			p= DerbyUtils.LoadPaciente(2);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(p.DNI+"\n"+p.getNombre()+" "+p.getApellido()+"\n"+p.getSexo()+"\n"+p.Edad+"\n"+p.Fecha);*/
 	}
 	
 	@FXML
@@ -387,11 +405,10 @@ public class Main extends Application
 	}
 	
 	
-	@Override
-	public void init()
+	@FXML
+	public void initialize()
 	{
 		pestaña = 0;
-		//System.out.println("JavaFX init()");
 		BBDD = Derby.getInstance();
 		if(!BBDD.initialize())
 			BBDD = null;
@@ -399,18 +416,16 @@ public class Main extends Application
 			Paciente p = DerbyUtils.LoadPaciente(1);
 			System.out.println(p.Nombre+" "+p.getFecha());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ClipsHandler.init();
 		
+		onAbrirSeleccion(null);
 	}
 	
 	@Override
 	public void start(Stage primaryStage)
 	{
-		//System.out.println("JavaFX start()");
-		
 		URL url = getClass().getResource("gui_tabbed.fxml");
 		AnchorPane pane = null;
 		try {
@@ -438,8 +453,6 @@ public class Main extends Application
 	@Override
 	public void stop()
 	{
-		//System.out.println("JavaFX stop()");
-		
 		if(BBDD != null)
 			BBDD.shutdown();
 		ClipsHandler.destroy();
