@@ -30,7 +30,7 @@ public class FX_CLIPS_output extends Router {
 		}else{ 
 			tf2.getChildren().add(new Text(arg1));
 		}	
-	//	super.print(arg0, arg1);
+		super.print(arg0, arg1);
 	}
 
 }

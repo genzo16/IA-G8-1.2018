@@ -1,12 +1,5 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import application.Derby;
-
 public abstract class Analisis 
 {
 	private int id_analisis;

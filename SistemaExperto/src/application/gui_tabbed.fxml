@@ -16,22 +16,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TabPane prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane fx:id="tabContainer" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Datos personales">
                                  <content>
                                     <AnchorPane maxHeight="390.0" prefHeight="346.0" prefWidth="600.0">
                                        <children>
-                                          <TextField fx:id="dni" layoutX="131.0" layoutY="45.0" promptText="12.345.678" />
+                                          <TextField fx:id="dni" layoutX="131.0" layoutY="45.0" promptText="12.345.678" text="12.345.678" />
                                           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="49.0" prefHeight="17.0" prefWidth="85.0" text="DNI" />
-                                          <TextField fx:id="apellido" layoutX="131.0" layoutY="75.0" />
+                                          <TextField fx:id="apellido" layoutX="131.0" layoutY="75.0" text="Ares" />
                                           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="79.0" prefHeight="17.0" prefWidth="85.0" text="Apellido" />
                                           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="107.0" prefHeight="17.0" prefWidth="85.0" text="Nombre" />
-                                          <TextField fx:id="nombre" layoutX="131.0" layoutY="105.0" />
-                                          <TextField fx:id="edad" layoutX="417.0" layoutY="45.0" />
+                                          <TextField fx:id="nombre" layoutX="131.0" layoutY="105.0" text="Fernando" />
+                                          <TextField fx:id="edad" layoutX="417.0" layoutY="45.0" text="25" />
                                           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="319.0" layoutY="49.0" prefHeight="17.0" prefWidth="85.0" text="Edad" />
                                           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="319.0" layoutY="79.0" prefHeight="17.0" prefWidth="85.0" text="Sexo" />
-                                          <ChoiceBox fx:id="sexo" layoutX="417.0" layoutY="75.0" prefWidth="150.0">
+                                          <ChoiceBox fx:id="sexo" layoutX="417.0" layoutY="75.0" prefWidth="150.0" value="Masculino">
                                              <items>
                                                 <FXCollections fx:factory="observableArrayList">
                                                    <String fx:id="femenino" fx:value="Femenino" />
@@ -58,11 +58,11 @@
                                                                <children>
                                                                   <VBox prefHeight="200.0" prefWidth="130.0" spacing="11.0">
                                                                      <children>
-                                                                        <Label text="Tipo de dolencia" textAlignment="RIGHT" />
+                                                                        <Label text="Zona" textAlignment="RIGHT" />
                                                                         <Label text="Aspecto" />
                                                                         <Label text="Inflamación" />
-                                                                        <Label text="Origen" />
-                                                                        <Label text="Mejora con" />
+                                                                        <Label text="Inicio dolor" />
+                                                                        <Label text="Condicion de alivio" />
                                                                         <Label text="Lo despierta a la noche" />
                                                                         <Label text="Edad de comienzo" />
                                                                         <Label text="Persistencia" />
@@ -79,13 +79,13 @@
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
                                                                            <String fx:id="nada" fx:value="-" />
-                                                                           <String fx:id="articular" fx:value="Articular" />
-                                                                           <String fx:id="ocular" fx:value="Ocular" />
-                                                                           <String fx:id="columna_lumbar" fx:value="Columna lumbar" />
-                                                                           <String fx:id="columna_dorsal" fx:value="Columna dorsal" />
-                                                                           <String fx:id="columna_cervical" fx:value="Columna cervical" />
-                                                                           <String fx:id="intestinal" fx:value="Intestinal" />
-                                                                           <String fx:id="piel" fx:value="piel" />
+                                                                           <String fx:id="articular" fx:value="articular" />
+                                                                           <String fx:id="ocular" fx:value="ocular" />
+                                                                           <String fx:id="Lumbar" fx:value="lumbar" />
+                                                                           <String fx:id="Dorsal" fx:value="dorsal" />
+                                                                           <String fx:id="Cervical" fx:value="cervical" />
+                                                                           <String fx:id="intestinal" fx:value="intestinal" />
+                                                                           <String fx:id="piel" fx:value="enrojecimiento_manchas" />	
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
@@ -110,9 +110,10 @@
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
                                                                            <String fx:id="desconocido" fx:value="Desconocido" />
-                                                                           <String fx:id="fisica" fx:value="Actividad física" />
-                                                                           <String fx:id="peso" fx:value="Levantó peso" />
-                                                                           <String fx:id="postura" fx:value="Mala postura" />
+                                                                           <String fx:id="fisica" fx:value="peso" />
+                                                                           <String fx:id="peso" fx:value="ejercicio" />
+                                                                           <String fx:id="postura" fx:value="postura" />
+                                                                           <String fx:id="nocturno" fx:value="nocturno" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
@@ -120,8 +121,9 @@
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
                                                                            <String fx:id="nada" fx:value="-" />
-                                                                           <String fx:id="reposo" fx:value="En reposo" />
-                                                                           <String fx:id="actividad" fx:value="Con actividad" />
+                                                                           <String fx:id="reposo" fx:value="reposo" />
+                                                                           <String fx:id="actividad" fx:value="actividad" />
+                                                                           <String fx:id="anti_inflamatorios" fx:value="anti_inflamatorios" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
@@ -134,7 +136,7 @@
                                                                      </items>
                                                                   </ChoiceBox>
                                                                   <TextField fx:id="edad1" promptText="(años)" />
-                                                                  <TextField fx:id="persiste1" promptText="(meses)" />
+                                                                  <TextField fx:id="persiste1" promptText="(meses)" text="0" />
                                                                </children>
                                                             </VBox>
                                                             <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
@@ -306,15 +308,15 @@
                                                       <Label layoutX="30.0" layoutY="30.0" text="Antecedentes del paciente:" />
                                                       <VBox layoutX="30.0" layoutY="75.0" prefHeight="344.0" prefWidth="194.0" spacing="7.0">
                                                          <children>
-                                                            <CheckBox fx:id="ante_colitis" mnemonicParsing="false" text="Colitis" />
-                                                            <CheckBox fx:id="ante_dacti" mnemonicParsing="false" text="Dactilitis" />
-                                                            <CheckBox fx:id="ante_ente" mnemonicParsing="false" text="Entesitis" />
-                                                            <CheckBox fx:id="ante_uve" mnemonicParsing="false" text="Uveitis" />
-                                                            <CheckBox fx:id="ante_gastro" mnemonicParsing="false" text="Infeccion Gastrointestinal" />
-                                                            <CheckBox fx:id="ante_uro" mnemonicParsing="false" text="Infeccion Urogenital" />
-                                                            <CheckBox fx:id="ante_pso" mnemonicParsing="false" text="Psoriasis" />
-                                                            <CheckBox fx:id="ante_crohn" mnemonicParsing="false" text="Enfermadad de Crohn" />
-                                                            <CheckBox fx:id="ante_colitis_ulcerosa" mnemonicParsing="false" text="Colitis Ulcerosa" />
+                                                            <CheckBox fx:id="ante_colitis" disable="true" mnemonicParsing="false" text="Colitis" />
+                                                            <CheckBox fx:id="p_dactilitis" mnemonicParsing="false" text="Dactilitis" />
+                                                            <CheckBox fx:id="p_entecitis" mnemonicParsing="false" text="Entesitis" />
+                                                            <CheckBox fx:id="p_uveitis" mnemonicParsing="false" text="Uveitis" />
+                                                            <CheckBox fx:id="p_infeccion" mnemonicParsing="false" text="Infeccion " />
+                                                            <CheckBox fx:id="ante_uro" disable="true" mnemonicParsing="false" text="Infeccion Urogenital" />
+                                                            <CheckBox fx:id="p_psoriasis" mnemonicParsing="false" text="Psoriasis" />
+                                                            <CheckBox fx:id="p_diarrea" mnemonicParsing="false" text="Enfermadad de Crohn" />
+                                                            <CheckBox fx:id="p_rotuliano" mnemonicParsing="false" text="Artritis" />
                                                          </children>
                                                       </VBox>
                                                       <Label layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
@@ -329,14 +331,14 @@
                                                       <Label layoutX="30.0" layoutY="30.0" text="Antecedentes familiares:" />
                                                       <VBox layoutX="30.0" layoutY="75.0" prefHeight="344.0" prefWidth="194.0" spacing="7.0">
                                                          <children>
-                                                            <CheckBox fx:id="ante_crohn2" mnemonicParsing="false" text="Enfermedad de Crohn" />
-                                                            <CheckBox fx:id="ante_colitis_ulcerosa2" mnemonicParsing="false" text="Colitis Ulcerosa" />
+                                                            <CheckBox fx:id="f_diarrea" mnemonicParsing="false" text="Enfermedad de Crohn" />
+                                                            <CheckBox fx:id="ante_colitis_ulcerosa2" disable="true" mnemonicParsing="false" text="Colitis Ulcerosa" />
                                                             <CheckBox fx:id="ante_anqui" mnemonicParsing="false" text="Espondilitis Anquilosante" />
-                                                            <CheckBox fx:id="ante_reactiva" mnemonicParsing="false" text="Artritis Reactiva" />
-                                                            <CheckBox fx:id="ante_artritis_pso" mnemonicParsing="false" text="Artritis Psoriasica" />
+                                                            <CheckBox fx:id="f_infeccion" mnemonicParsing="false" text="Artritis Reactiva" />
+                                                            <CheckBox fx:id="f_psoriasis" mnemonicParsing="false" text="Artritis Psoriasica" />
                                                             <CheckBox fx:id="ante_indif" mnemonicParsing="false" text="Espondilitis Indiferenciada" />
-                                                            <CheckBox fx:id="ante_juv" mnemonicParsing="false" text="Espondilitis Juvenil" />
-                                                            <CheckBox fx:id="ante_reuma" mnemonicParsing="false" text="Artritis Reumatoide" />
+                                                            <CheckBox fx:id="ante_juv" disable="true" mnemonicParsing="false" text="Espondilitis Juvenil" />
+                                                            <CheckBox fx:id="f_rotuliano" mnemonicParsing="false" text="Artritis Reumatoide" />
                                                          </children>
                                                       </VBox>
                                                       <Label layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
@@ -362,8 +364,8 @@
                                                       <ChoiceBox fx:id="gen_resultado" layoutX="330.0" layoutY="38.0" prefWidth="150.0">
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="positivo" fx:value="Positivo" />
-                                                               <String fx:id="negativo" fx:value="Negativo" />
+                                                               <String fx:id="positivo" fx:value="si" />
+                                                               <String fx:id="negativo" fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
@@ -406,8 +408,8 @@
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
                                                                <String fx:id="nada" fx:value="-" />
-                                                               <String fx:id="positivo" fx:value="Sacroilitis" />
-                                                               <String fx:id="negativo" fx:value="Normal" />
+                                                               <String fx:id="positivo" fx:value="si" />
+                                                               <String fx:id="negativo" fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
@@ -416,8 +418,8 @@
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
                                                                <String fx:id="nada" fx:value="-" />
-                                                               <String fx:id="positivo" fx:value="Sacroilitis" />
-                                                               <String fx:id="negativo" fx:value="Normal" />
+                                                               <String fx:id="positivo" fx:value="si" />
+                                                               <String fx:id="negativo" fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
