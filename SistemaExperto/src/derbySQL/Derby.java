@@ -1,4 +1,4 @@
-package application;
+package derbySQL;
 
 import java.sql.*;
 

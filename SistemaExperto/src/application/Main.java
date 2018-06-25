@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
+import derbySQL.Derby;
+import derbySQL.DerbyUtils;
+import hibernate.HibernateUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
@@ -136,15 +139,12 @@ public class Main extends Application
 	}
 	
 	@FXML
-	void onAbrirSeleccion(ActionEvent event) 
-	{
-		try {
-			lPacientes.getItems().clear();
-			for(Paciente p :DerbyUtils.LoadPacientes())
-				lPacientes.getItems().add(p);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	void AcrualizarListaPacientes(ActionEvent event) 
+	{		
+		lPacientes.getItems().clear();
+		for(Paciente p :HibernateUtils.listPacientes()) // DerbyUtils.LoadPacientes()
+			lPacientes.getItems().add(p);
+		lPacientes.getSelectionModel().selectFirst();
 	}
 	
 	@FXML
@@ -409,18 +409,18 @@ public class Main extends Application
 	public void initialize()
 	{
 		pestaña = 0;
-		BBDD = Derby.getInstance();
-		if(!BBDD.initialize())
-			BBDD = null;
-		try {
-			Paciente p = DerbyUtils.LoadPaciente(1);
-			System.out.println(p.Nombre+" "+p.getFecha());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		BBDD = Derby.getInstance();
+//		if(!BBDD.initialize())
+//			BBDD = null;
+//		try {
+//			Paciente p = DerbyUtils.LoadPaciente(1);
+//			System.out.println(p.getNombre()+" "+p.getFecha());
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		ClipsHandler.init();
-		
-		onAbrirSeleccion(null);
+		HibernateUtils.getSessionFactory();
+		AcrualizarListaPacientes(null);
 	}
 	
 	@Override
@@ -453,8 +453,9 @@ public class Main extends Application
 	@Override
 	public void stop()
 	{
-		if(BBDD != null)
-			BBDD.shutdown();
+//		if(BBDD != null)
+//			BBDD.shutdown();
+		HibernateUtils.shutdown();
 		ClipsHandler.destroy();
 	}
 	

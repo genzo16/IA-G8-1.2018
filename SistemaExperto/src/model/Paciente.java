@@ -1,37 +1,32 @@
 package model;
 
 import java.sql.Date;
+import java.util.List;
+import javax.persistence.*;
+import org.hibernate.Session;
+import hibernate.HibernateUtils;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-
-public class Paciente implements GUIFriendly {
-	/* JavaFX links */
-	
-	@FXML // fx:id="dni"
-	private static TextField dniFX;
-	@FXML // fx:id="apellido"
-	private static TextField apellidoFX;
-	@FXML // fx:id="nombre"
-	private static TextField nombreFX;
-	@FXML // fx:id="edad"
-	private static TextField edadFX;
-	// fx:id="fecha"
-	//private static TextField fechaFX;
-	@FXML // fx:id="sexo"
-	private ChoiceBox<String> sexoFX;
-	
+@Entity
+@Table(name = "PACIENTE")
+public class Paciente implements GUIFriendly 
+{	
 	/* Variables */
-	// TODO: shouldn't these all be private, since we have getters and setters?
-	
+	@Id
+	@Column(name ="PACIENTE_ID")
 	private Integer id_paciente;
-	public String DNI;
-	public String Nombre;
-	public String Apellido;
-	public Integer Edad;
-	public Date Fecha;// (de cuando fue guardado el perfil de paciente)
-	public String Sexo;
+	private String DNI;
+	@Column(name ="NOMBRE")
+	private String Nombre;
+	@Column(name ="APELLIDO")
+	private String Apellido;
+	@Column(name ="EDAD")
+	private Integer Edad;
+	@Column(name ="FECHA")
+	private Date Fecha;// (de cuando fue guardado el perfil de paciente)
+	@Column(name ="SEXO")
+	private String Sexo;
+	
+//	private List<Diagnostico> diagnosticos;
 	
 	public Paciente(int id_paciente, String dNI, String nombre, String apellido, int edad, Date fecha,
 			String sexo) {
@@ -46,38 +41,9 @@ public class Paciente implements GUIFriendly {
 	}
 	
 	public Paciente() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public void grabFromGUI() {
-		DNI = dniFX.getText();
-		Nombre = nombreFX.getText();
-		Apellido = apellidoFX.getText();
-		try {
-			Edad = Integer.parseInt( edadFX.getText() );
-		} catch(NumberFormatException e) {
-			Edad = -1;
-		}
-		
-		//String tempDate = fechaFX.getText();
-		// TODO: do date conversion
-		//Fecha = Date.valueOf("");
-		
-		Sexo = sexoFX.getValue();
-	}
-	
-	public void pushToGUI() {
-		dniFX.setText(DNI);
-		nombreFX.setText(Nombre);
-		apellidoFX.setText(Apellido);
-		edadFX.setText(String.valueOf(Edad));
-		//fechaFX.setText(Fecha.toString());
-		sexoFX.setValue(Sexo);
 	}
 	
 	/* Getters & Setters */
-	
-
 	public Integer getId_paciente() {
 		return id_paciente;
 	}
@@ -146,5 +112,25 @@ public class Paciente implements GUIFriendly {
 		return getId_paciente()+" - "+getApellido()+", "+getNombre();
 	}
 
+	public static void save(Paciente paciente) 
+	{    
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.save(paciente);
+            session.getTransaction().commit();
+        }
+    }
+
+	@Override
+	public void grabFromGUI() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pushToGUI() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

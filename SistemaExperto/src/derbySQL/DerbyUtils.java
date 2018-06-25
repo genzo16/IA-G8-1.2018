@@ -1,4 +1,4 @@
-package application;
+package derbySQL;
 	/*
     Derby - WwdUtils.java - utilitity methods used by WwdEmbedded.java
 
@@ -100,7 +100,6 @@ public class DerbyUtils {
 		Connection conn = Derby.getInstance().getConnection();
 		PreparedStatement s;
 		ResultSet rs=null;
-		Paciente rPac = null;
 		try {
 			s = conn.prepareStatement("select * from paciente");
 			rs = s.executeQuery();
