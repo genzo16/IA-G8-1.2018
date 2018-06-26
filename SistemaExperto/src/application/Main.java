@@ -4,7 +4,6 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -12,12 +11,10 @@ import java.text.SimpleDateFormat;
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
 import derbySQL.Derby;
-import derbySQL.DerbyUtils;
 import hibernate.HibernateUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import model.Dolencia1;
 import model.Paciente;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -39,11 +36,13 @@ public class Main extends Application
 	
 	private int pestaña;
 	private TextFlow tf1, tf2;
-	@FXML
-	private Dolencia1 d1;
 	//-------------------------------------------------------------------------------
 	@FXML // fx:id="tabContainer"
 	private TabPane tabContainer;
+	@FXML
+	private TextField nro_afiliado;
+	@FXML
+	private TextField dni;
 	@FXML // fx:id="apellido"
 	private TextField apellido;
 	@FXML // fx:id="nombre"
@@ -132,6 +131,8 @@ public class Main extends Application
 		apellido.setText(actual.getApellido());
 		nombre.setText(actual.getNombre());
 		edad.setText(actual.getEdad().toString());
+		dni.setText(actual.getDNI());
+		nro_afiliado.setText(actual.getId_paciente().toString());
 		if(actual.getSexo().equals("masculino"))
 			sexo.getSelectionModel().select(1);
 		else
@@ -395,13 +396,10 @@ public class Main extends Application
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-		Paciente p = new Paciente(0,"12.123.123","Rafael","Aylas",32,date,"Masculino");
-//		p.grabFromGUI();
-		try {
-			DerbyUtils.SavePaciente(p);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Paciente p = new Paciente(Integer.parseInt(nro_afiliado.getText()), dni.getText(), nombre.getText(), apellido.getText(),
+				Integer.parseInt(edad.getText()), date, sexo.getSelectionModel().getSelectedItem());
+		Paciente.saveOrUpdate(p);
+		AcrualizarListaPacientes(null);
 	}
 	
 	
@@ -409,15 +407,7 @@ public class Main extends Application
 	public void initialize()
 	{
 		pestaña = 0;
-//		BBDD = Derby.getInstance();
-//		if(!BBDD.initialize())
-//			BBDD = null;
-//		try {
-//			Paciente p = DerbyUtils.LoadPaciente(1);
-//			System.out.println(p.getNombre()+" "+p.getFecha());
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		Derby.getInstance().initialize();
 		ClipsHandler.init();
 		HibernateUtils.getSessionFactory();
 		AcrualizarListaPacientes(null);
@@ -453,8 +443,6 @@ public class Main extends Application
 	@Override
 	public void stop()
 	{
-//		if(BBDD != null)
-//			BBDD.shutdown();
 		HibernateUtils.shutdown();
 		ClipsHandler.destroy();
 	}

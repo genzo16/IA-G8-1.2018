@@ -1,17 +1,42 @@
 package model;
 
-public abstract class Analisis 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+//"CREATE TABLE ANALISIS "
+//+ "(ANALISIS_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+//+ "CONSTRAINT ANALISIS_PK PRIMARY KEY "
+//+ "CONSTRAINT ANALISIS_FK REFERENCES DIAGNOSTICO, "
+//+ "NOMBRE VARCHAR(32) NOT NULL, "
+//+ "TIPO_ANALISIS VARCHAR(32) NOT NULL, "
+//+ "RESULTADO VARCHAR(32) NOT NULL)";
+@Entity
+@Table(name="ANALISIS")
+public class Analisis  implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7422857790964899147L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ANALISIS_ID")
 	private int id_analisis;
-	private String idPaciente;
+	@Column(name="NOMBRE")
 	private String nombre;
+	@Column(name="TIPO_ANALISIS")
 	private TIPO_ANALISIS tipo_analisis;
+	@Column(name="RESULTADO")
 	private String resultado;
 	
-	public Analisis(int id_analisis, String idPaciente, String nombre, TIPO_ANALISIS tipo_analisis, String resultado) {
+	public Analisis() {
+		super();
+	}
+
+	public Analisis(int id_analisis, String nombre, TIPO_ANALISIS tipo_analisis, String resultado) {
 		super();
 		this.id_analisis = id_analisis;
-		this.idPaciente = idPaciente;
 		this.nombre = nombre;
 		this.tipo_analisis = tipo_analisis;
 		this.resultado = resultado;
@@ -23,14 +48,6 @@ public abstract class Analisis
 
 	public void setId_analisis(int id_analisis) {
 		this.id_analisis = id_analisis;
-	}
-
-	public String getIdPaciente() {
-		return idPaciente;
-	}
-
-	public void setIdPaciente(String idPaciente) {
-		this.idPaciente = idPaciente;
 	}
 
 	public String getNombre() {

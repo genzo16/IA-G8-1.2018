@@ -1,17 +1,32 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import org.hibernate.Session;
 import hibernate.HibernateUtils;
-
+//"CREATE TABLE PACIENTE  "
+//+ "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
+//+ "CONSTRAINT PACIENTE_PK PRIMARY KEY, "
+//+ "NOMBRE VARCHAR(32) NOT NULL,"
+//+ "APELLIDO VARCHAR(32) NOT NULL,"
+//+ "DNI VARCHAR(32) NOT NULL,"
+//+ "EDAD INTEGER NOT NULL,"
+//+ "FECHA DATE NOT NULL,"
+//+ "SEXO VARCHAR(32) NOT NULL)";
 @Entity
 @Table(name = "PACIENTE")
-public class Paciente implements GUIFriendly 
+public class Paciente implements Serializable
 {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3930409348541533953L;
 	/* Variables */
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name ="PACIENTE_ID")
 	private Integer id_paciente;
 	private String DNI;
@@ -25,8 +40,9 @@ public class Paciente implements GUIFriendly
 	private Date Fecha;// (de cuando fue guardado el perfil de paciente)
 	@Column(name ="SEXO")
 	private String Sexo;
-	
-//	private List<Diagnostico> diagnosticos;
+
+	@OneToMany
+	private List<Diagnostico> diagnosticos;
 	
 	public Paciente(int id_paciente, String dNI, String nombre, String apellido, int edad, Date fecha,
 			String sexo) {
@@ -38,6 +54,8 @@ public class Paciente implements GUIFriendly
 		Edad = edad;
 		Fecha = fecha;
 		Sexo = sexo;
+		
+		diagnosticos = new ArrayList<Diagnostico>();
 	}
 	
 	public Paciente() {
@@ -100,37 +118,42 @@ public class Paciente implements GUIFriendly
 		Sexo = sexo;
 	}
 
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+	public List<Diagnostico> getDiagnosticos() {
+		return diagnosticos;
+	}
+
+	public void setDiagnosticos(List<Diagnostico> diagnosticos) {
+		this.diagnosticos = diagnosticos;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return getId_paciente()+" - "+getApellido()+", "+getNombre();
 	}
 
-	public static void save(Paciente paciente) 
+	public static void saveOrUpdate(Paciente paciente) 
 	{    
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             session.beginTransaction();
-            session.save(paciente);
+            session.saveOrUpdate(paciente);
             session.getTransaction().commit();
-        }
+            session.close();
+        }finally {
+	          
+	      }
     }
-
-	@Override
-	public void grabFromGUI() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pushToGUI() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	public static Paciente load(int id_paciente) 
+	{    
+		Paciente p = null;
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            p = session.get(Paciente.class, id_paciente);
+            session.getTransaction().commit();
+            session.close();
+        }finally {
+	      }
+        return p;
+    }
 	
 }

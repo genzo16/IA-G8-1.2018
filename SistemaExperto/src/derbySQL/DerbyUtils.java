@@ -55,10 +55,9 @@ public class DerbyUtils {
   public static boolean wwdChk4Table (Connection conTst ) throws SQLException {
      try {
         Statement s = conTst.createStatement();
-        s.execute("update PACIENTE set ENTRY_DATE = CURRENT_TIMESTAMP, NOMBRE = 'TEST ENTRY' where PACIENTE_ID=1");
+        s.execute("select * from PACIENTE");
      }  catch (SQLException sqle) {
         String theError = (sqle).getSQLState();
-        //   System.out.println("  Utils GOT:  " + theError);
         /** If table exists will get -  WARNING 02000: No row was found **/
         if (theError.equals("42X05"))   // Table does not exist
         {  return false;
@@ -70,7 +69,7 @@ public class DerbyUtils {
             throw sqle; 
          }
      }
-     System.out.println("TEST ENTRY updated.");
+     System.out.println("BBDD ok.");
      return true;
   }  /*** END wwdInitTable  **/
 

@@ -32,41 +32,47 @@ public class Derby {
 		dbName="derbyDB";
 		connectionURL = "jdbc:derby:"+dbName+";create=true";
 		
-        String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE, APELLIDO, DNI, EDAD, FECHA, SEXO) "
-        		+ "VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY','NONE','NONE',0, CURRENT_DATE,'MASCULINO')";
+//        String psInsert= " INSERT INTO PACIENTE(ENTRY_DATE, NOMBRE, APELLIDO, DNI, EDAD, FECHA, SEXO) "
+//        		+ "VALUES(CURRENT_TIMESTAMP, 'TEST ENTRY','NONE','NONE',0, CURRENT_DATE,'MASCULINO')";
         
 		String ctPaciente = "CREATE TABLE PACIENTE  "
 		        + "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
-		        + "CONSTRAINT PACIENTE_PK PRIMARY KEY, " 
-		        + "ENTRY_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
-		        + "NOMBRE VARCHAR(32) NOT NULL,"
-		        + "APELLIDO VARCHAR(32) NOT NULL,"
-		        + "DNI VARCHAR(32) NOT NULL,"
-		        + "EDAD INTEGER NOT NULL,"
-		        + "FECHA DATE NOT NULL,"
-		        + "SEXO VARCHAR(32) NOT NULL)";
+		        + "CONSTRAINT PACIENTE_PK PRIMARY KEY, "
+		        + "NOMBRE VARCHAR(32) ,"
+		        + "APELLIDO VARCHAR(32) ,"
+		        + "DNI VARCHAR(32) ,"
+		        + "EDAD INTEGER ,"
+		        + "FECHA DATE ,"
+		        + "SEXO VARCHAR(32) )";
 		String ctDolor = "CREATE TABLE DOLOR "
 		        + "(DOLOR_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
-		        + "CONSTRAINT DOLOR_PK PRIMARY KEY, "
-		        + "ZONA VARCHAR(32) NOT NULL, "
-		        + "TIPO VARCHAR(32) NOT NULL) ";
+		        + "CONSTRAINT DOLOR_PK PRIMARY KEY "
+		        + "CONSTRAINT DOLOR_FK REFERENCES DIAGNOSTICO, "
+		        + "ZONA VARCHAR(32) , "
+		        + "INICIO_DOLOR VARCHAR(32) , "
+		        + "CONDICION_ALIVIO VARCHAR(32) , "
+		        + "RECURRENCIA INT , "
+		        + "TIPO VARCHAR(32) ) ";
 		String ctAnalisis = "CREATE TABLE ANALISIS "
 		        + "(ANALISIS_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
-		        + "CONSTRAINT ANALISIS_PK PRIMARY KEY, "
-		        + "NOMBRE VARCHAR(32) NOT NULL, "
-		        + "TIPO_ANALISIS VARCHAR(32) NOT NULL, "
-		        + "RESULTADO VARCHAR(32) NOT NULL)";
+		        + "CONSTRAINT ANALISIS_PK PRIMARY KEY "
+		        + "CONSTRAINT ANALISIS_FK REFERENCES DIAGNOSTICO, "
+		        + "NOMBRE VARCHAR(32) , "
+		        + "TIPO_ANALISIS VARCHAR(32) , "
+		        + "RESULTADO VARCHAR(32))";
 		String ctAntecedente = "CREATE TABLE ANTECEDENTE "
 		        + "(ANTECEDENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
-		        + "CONSTRAINT ANTECEDENTE_PK PRIMARY KEY, "
-		        + "ENFERMEDAD VARCHAR(32) NOT NULL, "
-		        + "TIPO_ANTECEDENTE VARCHAR(32) NOT NULL)";
+		        + "CONSTRAINT ANTECEDENTE_PK PRIMARY KEY "
+		        + "CONSTRAINT ANTECEDENTE_FK REFERENCES DIAGNOSTICO, "
+		        + "ENFERMEDAD VARCHAR(32) , "
+		        + "TIPO_ANTECEDENTE VARCHAR(32))";
 		String ctDiagnostico = "CREATE TABLE DIAGNOSTICO "
 		        + "(DIAGNOSTICO_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
-		        + "CONSTRAINT DIAGNOSTICO_PK PRIMARY KEY, "
-		        + "ESSPAX VARCHAR(32) NOT NULL, "
-		        + "RECOMENDACION VARCHAR(32) NOT NULL, "
-		        + "ENFERMEDAD VARCHAR(32) NOT NULL) ";
+		        + "CONSTRAINT DIAGNOSTICO_PK PRIMARY KEY "
+		        + "CONSTRAINT DIAGNOSTICO_FK REFERENCES PACIENTE, "
+		        + "ESSPAX VARCHAR(32) , "
+		        + "RECOMENDACION VARCHAR(32) , "
+		        + "ENFERMEDAD VARCHAR(32)) ";
 		
 		// Cargar el driver
 	
@@ -90,19 +96,18 @@ public class Derby {
 			s = conn.createStatement();
 			if (! DerbyUtils.wwdChk4Table(conn))
 			{  
-			   System.out.println (" . . . . creating table Paciente.");
+			   System.out.println ("La BD no existe, creandola...");
+			   System.out.println (" . . . . creando tabla Paciente.");
 			   s.execute(ctPaciente);
-			   System.out.println (" . . . . creating table Analisis.");
-			   s.execute(ctAnalisis);
-			   System.out.println (" . . . . creating table Dolor.");
-			   s.execute(ctDolor);
-			   System.out.println (" . . . . creating table Antecedente.");
-			   s.execute(ctAntecedente);
-			   System.out.println (" . . . . creating table Diagnostico.");
+			   System.out.println (" . . . . creando tabla Diagnostico.");
 			   s.execute(ctDiagnostico);
-			   System.out.println (" . . . . inserting TEST ENTRY.");
-			   s.executeUpdate(psInsert);		  
-			   System.out.println ("DB succesfully initiated.");
+			   System.out.println (" . . . . creando tabla Analisis.");
+			   s.execute(ctAnalisis);
+			   System.out.println (" . . . . creando tabla Dolor.");
+			   s.execute(ctDolor);
+			   System.out.println (" . . . . creando tabla Antecedente.");
+			   s.execute(ctAntecedente);
+			   System.out.println ("DB creada.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,7 +116,8 @@ public class Derby {
 		return true;
 	}
 	
-	protected boolean initialize()
+	// Crea la base de datos si no existe
+	public boolean initialize()
 	{
 		boolean retValue = false;
 		try {
@@ -121,11 +127,11 @@ public class Derby {
 			e.printStackTrace();
 			return false;
 		}
-		
+		shutdown();
 		return retValue;
 	}
 	
-	protected void shutdown()
+	public void shutdown()
 	{
 		if (driver.equals("org.apache.derby.jdbc.EmbeddedDriver")) 
 		{

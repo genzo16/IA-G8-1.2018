@@ -1,13 +1,58 @@
 package model;
 
-public class Antecedentes implements GUIFriendly{
+import java.io.Serializable;
 
+import javax.persistence.*;
+
+//"CREATE TABLE ANTECEDENTE "
+//+ "(ANTECEDENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY "
+//+ "CONSTRAINT ANTECEDENTE_PK PRIMARY KEY "
+//+ "CONSTRAINT ANTECEDENTE_FK REFERENCES DIAGNOSTICO, "
+//+ "ENFERMEDAD VARCHAR(32) NOT NULL, "
+//+ "TIPO_ANTECEDENTE VARCHAR(32) NOT NULL)";
+@Entity
+@Table(name="ANTECEDENTE")
+public class Antecedentes   implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3991634440237184165L;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ANTECEDENTE_ID")
+	private int antecedente_id;
+	@Column(name="ENFERMEDAD")
+	private String enfermedad;
+	@Column(name="TIPO_ANTECEDENTE")
+	private int tipo_antecedente;
 	
-	public void grabFromGUI() {
-		
+	public Antecedentes() {
+		super();
 	}
 	
-	public void pushToGUI() {
-		
+	public Antecedentes(int antecedente_id, String enfermedad, int tipo_antecedente) {
+		super();
+		this.antecedente_id = antecedente_id;
+		this.enfermedad = enfermedad;
+		this.tipo_antecedente = tipo_antecedente;
+	}
+	public int getAntecedente_id() {
+		return antecedente_id;
+	}
+	public void setAntecedente_id(int antecedente_id) {
+		this.antecedente_id = antecedente_id;
+	}
+	public String getEnfermedad() {
+		return enfermedad;
+	}
+	public void setEnfermedad(String enfermedad) {
+		this.enfermedad = enfermedad;
+	}
+	public int getTipo_antecedente() {
+		return tipo_antecedente;
+	}
+	public void setTipo_antecedente(int tipo_antecedente) {
+		this.tipo_antecedente = tipo_antecedente;
 	}
 }
