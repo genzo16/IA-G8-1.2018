@@ -124,10 +124,13 @@ public class Main extends Application
 	@FXML
 	private Label antecedente_si_no;
 	
+	// Este es el paciente cargado actualmente
+	private Paciente actual = null;
+	
 	@FXML
 	void onCargar(ActionEvent event) 
 	{
-		Paciente actual = lPacientes.getSelectionModel().getSelectedItem();
+		actual = lPacientes.getSelectionModel().getSelectedItem();
 		apellido.setText(actual.getApellido());
 		nombre.setText(actual.getNombre());
 		edad.setText(actual.getEdad().toString());
@@ -396,9 +399,23 @@ public class Main extends Application
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-		Paciente p = new Paciente(Integer.parseInt(nro_afiliado.getText()), dni.getText(), nombre.getText(), apellido.getText(),
-				Integer.parseInt(edad.getText()), date, sexo.getSelectionModel().getSelectedItem());
-		Paciente.saveOrUpdate(p);
+		if(actual == null)
+		{
+			actual = new Paciente(null, dni.getText(), nombre.getText(), apellido.getText(),
+					Integer.parseInt(edad.getText()), date, sexo.getSelectionModel().getSelectedItem());
+		}
+		if(actual.getId_paciente()==null) 
+		{
+			Paciente.persist(actual);
+		}else {
+			actual.setApellido(apellido.getText());
+			actual.setNombre(nombre.getText());
+			actual.setDNI(dni.getText());
+			actual.setEdad(Integer.parseInt(edad.getText()));
+			actual.setSexo(sexo.getSelectionModel().getSelectedItem());
+			Paciente.saveOrUpdate(actual);
+		}
+		Paciente.saveOrUpdate(actual);
 		AcrualizarListaPacientes(null);
 	}
 	

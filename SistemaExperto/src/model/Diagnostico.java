@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name="DIAGNOSTICO")
 public class Diagnostico  implements Serializable
@@ -17,7 +20,7 @@ public class Diagnostico  implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="DIAGNOSTICO_ID")
-	private int id_diagnostico;
+	private Integer id_diagnostico;
 	@Column(name="ESSPAX")
 	private String esSPAX;
 	@Column(name="RECOMENDACION")
@@ -25,18 +28,24 @@ public class Diagnostico  implements Serializable
 	@Column(name="ENFERMEDAD")
 	private String enfermedad;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name="ANALISIS_ID")
 	private List<Analisis> analisis;
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name="DOLOR_ID")
 	private List<Dolor> dolores;
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name="ANTECEDENTE_ID")
 	private List<Antecedentes> antecedentes;
 	
 	public Diagnostico() {
 		super();
 	}
 
-	public Diagnostico(int id_diagnostico, String esSPAX, String recomendacion, String enfermedad) {
+	public Diagnostico(Integer id_diagnostico, String esSPAX, String recomendacion, String enfermedad) {
 		super();
 		this.id_diagnostico = id_diagnostico;
 		this.esSPAX = esSPAX;
@@ -48,11 +57,11 @@ public class Diagnostico  implements Serializable
 		antecedentes = new ArrayList<Antecedentes>();
 	}
 
-	public int getId_diagnostico() {
+	public Integer getId_diagnostico() {
 		return id_diagnostico;
 	}
 
-	public void setId_diagnostico(int id_diagnostico) {
+	public void setId_diagnostico(Integer id_diagnostico) {
 		this.id_diagnostico = id_diagnostico;
 	}
 

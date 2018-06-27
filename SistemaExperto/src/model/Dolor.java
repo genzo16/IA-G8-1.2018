@@ -24,7 +24,7 @@ public class Dolor  implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="DOLOR_ID")
-	private int id_dolencia;
+	private Integer id_dolencia;
 	@Column(name="TIPO")
 	public String tipo;
 	@Column(name="ZONA")
@@ -40,7 +40,7 @@ public class Dolor  implements Serializable
 		super();
 	}
 
-	public Dolor(int id_dolencia, String tipo, String zona, String incio_dolor, String condicion_alivio,
+	public Dolor(Integer id_dolencia, String tipo, String zona, String incio_dolor, String condicion_alivio,
 			int recurrencia) {
 		super();
 		this.id_dolencia = id_dolencia;
@@ -51,11 +51,11 @@ public class Dolor  implements Serializable
 		this.recurrencia = recurrencia;
 	}
 
-	public int getId_dolencia() {
+	public Integer getId_dolencia() {
 		return id_dolencia;
 	}
 
-	public void setId_dolencia(int id_dolencia) {
+	public void setId_dolencia(Integer id_dolencia) {
 		this.id_dolencia = id_dolencia;
 	}
 

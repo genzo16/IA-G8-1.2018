@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
       <TabPane prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -23,32 +24,57 @@
                                  <content>
                                     <AnchorPane>
                                        <children>
-                                          <TextField fx:id="dni" layoutX="131.0" layoutY="45.0" promptText="DNI" text="22.265.321" AnchorPane.leftAnchor="131.0" AnchorPane.topAnchor="45.0" />
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="49.0" prefHeight="17.0" prefWidth="85.0" text="DNI" AnchorPane.bottomAnchor="326.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="49.0" />
-                                          <TextField fx:id="apellido" layoutX="131.0" layoutY="75.0" text="Ares" AnchorPane.bottomAnchor="292.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="75.0" />
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="79.0" prefHeight="17.0" prefWidth="85.0" text="Apellido" AnchorPane.leftAnchor="33.0" />
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="33.0" layoutY="107.0" prefHeight="17.0" prefWidth="85.0" text="Nombre" />
-                                          <TextField fx:id="nombre" layoutX="131.0" layoutY="105.0" text="Fernando" />
-                                          <TextField fx:id="edad" layoutX="417.0" layoutY="45.0" text="25" />
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="319.0" layoutY="49.0" prefHeight="17.0" prefWidth="85.0" text="Edad" />
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="319.0" layoutY="79.0" prefHeight="17.0" prefWidth="85.0" text="Sexo" />
-                                          <ChoiceBox fx:id="sexo" layoutX="417.0" layoutY="75.0" prefWidth="150.0" value="Masculino">
-                                             <items>
-                                                <FXCollections fx:factory="observableArrayList">
-                                                   <String fx:id="femenino" fx:value="Femenino" />
-                                                   <String fx:id="masculino" fx:value="Masculino" />
+                                          <AnchorPane layoutX="17.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="566.0">
+                                             <children>
+                                                <TextField fx:id="edad" layoutX="357.0" layoutY="67.0" />
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="71.0" prefHeight="17.0" prefWidth="85.0" text="Edad" />
+                                                <ChoiceBox fx:id="sexo" layoutX="357.0" layoutY="99.0" prefWidth="150.0" value="Masculino">
+                                                   <items>
+                                                      <FXCollections fx:factory="observableArrayList">
+                                                         <String fx:id="femenino" fx:value="Femenino" />
+                                                         <String fx:id="masculino" fx:value="Masculino" />
+                                                      </FXCollections>
+                                                   </items>
+                                                </ChoiceBox>
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="138.0" prefHeight="17.0" prefWidth="85.0" text="Nombre" />
+                                                <TextField fx:id="apellido" layoutX="103.0" layoutY="67.0" prefHeight="25.0" prefWidth="151.0" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="312.0" AnchorPane.topAnchor="67.0" />
+                                                <TextField fx:id="nombre" layoutX="104.0" layoutY="134.0" />
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="26.0" layoutY="99.0" prefHeight="25.0" prefWidth="73.0" text="DNI" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="467.0" AnchorPane.topAnchor="99.0" />
+                                                <TextField fx:id="nro_afiliado" layoutX="357.0" layoutY="134.0" promptText="Deje Id vacio para nuevo." />
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="103.0" prefHeight="17.0" prefWidth="85.0" text="Sexo" />
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="71.0" prefHeight="17.0" prefWidth="85.0" text="Apellido" AnchorPane.leftAnchor="14.0" />
+                                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="138.0" prefHeight="17.0" prefWidth="85.0" text="Afiliado" />
+                                                <TextField fx:id="dni" layoutX="104.0" layoutY="99.0" promptText="DNI" AnchorPane.leftAnchor="104.0" AnchorPane.topAnchor="99.0" />
+                                                <Button layoutX="357.0" layoutY="175.0" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="149.0" text="Nuevo/Actualizar" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="252.0" layoutX="-3.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" />
+                                                <Text fontSmoothingType="LCD" layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INGRESO DE PACIENTE" wrappingWidth="406.13671875">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="30.0" />
+                                                   </font>
+                                                </Text>
+                                                <Rectangle arcHeight="5.0" blendMode="MULTIPLY" height="44.0" layoutX="-3.0" layoutY="12.0" stroke="WHITE" strokeType="INSIDE" width="978.0">
+                                                   <fill>
+                                                      <LinearGradient endX="1.0" endY="1.0">
+                                                         <stops>
+                                                            <Stop color="#1978d0" />
+                                                            <Stop color="WHITE" offset="1.0" />
+                                                         </stops>
+                                                      </LinearGradient>
+                                                   </fill>
+                                                </Rectangle>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="21.0" layoutY="281.0" prefHeight="97.0" prefWidth="562.0">
+                                             <children>
+                                                <ChoiceBox fx:id="lPacientes" layoutX="106.0" layoutY="49.0" prefWidth="150.0">
+                                                   <items>
+                                                        <FXCollections fx:factory="observableArrayList">
                                                 </FXCollections>
-                                             </items>
-                                          </ChoiceBox>
-                                          <Button fx:id="cargar" layoutX="293.0" layoutY="221.0" mnemonicParsing="false" onAction="#onCargar" text="Cargar" />
-                                          <ChoiceBox fx:id="lPacientes" layoutX="131.0" layoutY="221.0" prefWidth="150.0">
-                                             <items>
-                                                  <FXCollections fx:factory="observableArrayList">
-                                                </FXCollections>
-                                             </items>
-                                          </ChoiceBox>
-                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="319.0" layoutY="109.0" prefHeight="17.0" prefWidth="85.0" text="Afiliado" />
-                                          <TextField fx:id="nro_afiliado" layoutX="417.0" layoutY="105.0" text="0" />
+                                                   </items>
+                                                </ChoiceBox>
+                                                <Button fx:id="cargar" layoutX="268.0" layoutY="49.0" mnemonicParsing="false" onAction="#onCargar" text="Cargar" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -281,11 +307,6 @@
                                                       </HBox>
                                                    </children>
                                                 </AnchorPane>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1.0" stroke="#808080" strokeType="INSIDE" width="520.0">
-                                                   <VBox.margin>
-                                                      <Insets left="20.0" />
-                                                   </VBox.margin>
-                                                </Rectangle>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
                                                       <Label layoutX="143.0" layoutY="34.0" text="Ritmo evacuatorio:" />
@@ -363,9 +384,21 @@
                                  <content>
                                     <AnchorPane maxHeight="390.0" prefHeight="200.0" prefWidth="200.0">
                                        <children>
-                                          <VBox layoutX="20.0" layoutY="20.0" prefHeight="390.0" prefWidth="560.0">
+                                          <VBox layoutX="20.0" layoutY="20.0" prefHeight="552.0" prefWidth="982.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                                              <children>
-                                                <AnchorPane maxHeight="290.0" minHeight="76.0" prefHeight="82.0" prefWidth="560.0">
+                                                <AnchorPane>
+                                                   <children>
+                                                      <CheckBox fx:id="sangre" layoutX="10.0" mnemonicParsing="false" text="Sangre" AnchorPane.topAnchor="10.0" />
+                                                      <TextField fx:id="sangre_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
+                                                      <Label layoutX="160.0" layoutY="10.0" text="Fecha del estudio" />
+                                                      <Label layoutX="160.0" layoutY="42.0" text="ERS (Eritrosedimentacion)" />
+                                                      <Label layoutX="160.0" layoutY="74.0" text="PCR (Proteina C Reactiva)" />
+                                                      <TextField fx:id="sangre_ers" layoutX="330.0" layoutY="38.0" />
+                                                      <TextField fx:id="sangre_pcr" layoutX="330.0" layoutY="70.0" promptText="(ml/dl)" />
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="150.0" stroke="BLACK" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane>
                                                    <children>
                                                       <CheckBox fx:id="gen" layoutX="10.0" mnemonicParsing="false" text="Genético" AnchorPane.topAnchor="10.0" />
                                                       <TextField fx:id="gen_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
@@ -379,36 +412,16 @@
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="#ff1f1f00" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets top="5.0" />
                                                    </VBox.margin>
+                                                   <rotationAxis>
+                                                      <Point3D />
+                                                   </rotationAxis>
                                                 </AnchorPane>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1.0" stroke="#808080" strokeType="INSIDE" width="520.0">
-                                                   <VBox.margin>
-                                                      <Insets left="20.0" />
-                                                   </VBox.margin>
-                                                </Rectangle>
-                                                <AnchorPane prefHeight="114.0" prefWidth="560.0">
-                                                   <children>
-                                                      <CheckBox fx:id="sangre" layoutX="10.0" mnemonicParsing="false" text="Sangre" AnchorPane.topAnchor="10.0" />
-                                                      <TextField fx:id="sangre_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
-                                                      <Label layoutX="160.0" layoutY="10.0" text="Fecha del estudio" />
-                                                      <Label layoutX="160.0" layoutY="42.0" text="ERS (Eritrosedimentacion)" />
-                                                      <Label layoutX="160.0" layoutY="74.0" text="PCR (Proteina C Reactiva)" />
-                                                      <TextField fx:id="sangre_ers" layoutX="330.0" layoutY="38.0" />
-                                                      <TextField fx:id="sangre_pcr" layoutX="330.0" layoutY="70.0" promptText="(ml/dl)" />
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets top="5.0" />
-                                                   </VBox.margin>
-                                                </AnchorPane>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1.0" stroke="#808080" strokeType="INSIDE" width="520.0">
-                                                   <VBox.margin>
-                                                      <Insets left="20.0" />
-                                                   </VBox.margin>
-                                                </Rectangle>
-                                                <AnchorPane prefHeight="111.0" prefWidth="560.0">
+                                                <AnchorPane>
                                                    <children>
                                                       <CheckBox fx:id="imagen" layoutX="10.0" mnemonicParsing="false" text="Imágenes" AnchorPane.topAnchor="10.0" />
                                                       <TextField fx:id="imagen_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
@@ -433,10 +446,14 @@
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="#ff1f1f00" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets top="5.0" />
                                                    </VBox.margin>
+                                                   <rotationAxis>
+                                                      <Point3D />
+                                                   </rotationAxis>
                                                 </AnchorPane>
                                              </children>
                                           </VBox>
@@ -500,18 +517,18 @@
           </Tab>
           <Tab text="Logs">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="800.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="599.0" prefWidth="1024.0">
                      <children>
-                        <HBox prefWidth="600.0">
+                        <HBox prefHeight="545.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ScrollPane prefHeight="421.0" prefWidth="300.0">
+                              <ScrollPane prefHeight="639.0" prefWidth="652.0">
                                  <content>
-                                    <TextFlow fx:id="CLIPSdebug1" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="290.0" />
+                                    <TextFlow fx:id="CLIPSdebug1" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="648.0" />
                                  </content>
                               </ScrollPane>
-                              <ScrollPane prefHeight="421.0" prefWidth="300.0">
+                              <ScrollPane prefHeight="639.0" prefWidth="375.0">
                                  <content>
-                                    <TextFlow fx:id="CLIPSdebug2" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="290.0" />
+                                    <TextFlow fx:id="CLIPSdebug2" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="372.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -522,10 +539,8 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="600.0" layoutX="600.0" stroke="#808080" strokeType="INSIDE" width="1.0" />
-      <Button layoutX="57.0" layoutY="470.0" mnemonicParsing="false" onAction="#onSave" text="Guardar datos cargados" />
-      <Button layoutX="57.0" layoutY="501.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="143.0" text="Limpiar datos cargados" />
-      <Button layoutX="498.0" layoutY="470.0" mnemonicParsing="false" onAction="#onAdvance" text="Continuar &gt;&gt;" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="2.0" layoutY="450.0" stroke="#808080" strokeType="INSIDE" width="600.0" />
+      <Button layoutX="47.0" layoutY="681.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="143.0" text="Reiniciar consulta" />
+      <Button layoutX="884.0" layoutY="681.0" mnemonicParsing="false" onAction="#onAdvance" text="Continuar &gt;&gt;" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="94.0" layoutX="16.0" layoutY="658.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" />
    </children>
 </AnchorPane>

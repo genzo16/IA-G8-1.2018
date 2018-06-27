@@ -34,7 +34,7 @@ public class Analisis  implements Serializable
 		super();
 	}
 
-	public Analisis(int id_analisis, String nombre, TIPO_ANALISIS tipo_analisis, String resultado) {
+	public Analisis(Integer id_analisis, String nombre, TIPO_ANALISIS tipo_analisis, String resultado) {
 		super();
 		this.id_analisis = id_analisis;
 		this.nombre = nombre;
@@ -42,11 +42,11 @@ public class Analisis  implements Serializable
 		this.resultado = resultado;
 	}
 
-	public int getId_analisis() {
+	public Integer getId_analisis() {
 		return id_analisis;
 	}
 
-	public void setId_analisis(int id_analisis) {
+	public void setId_analisis(Integer id_analisis) {
 		this.id_analisis = id_analisis;
 	}
 

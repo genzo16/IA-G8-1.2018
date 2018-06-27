@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import org.hibernate.Session;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import hibernate.HibernateUtils;
 //"CREATE TABLE PACIENTE  "
 //+ "(PACIENTE_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY " 
@@ -41,10 +44,12 @@ public class Paciente implements Serializable
 	@Column(name ="SEXO")
 	private String Sexo;
 
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name="DIAGNOSTICO_ID")
 	private List<Diagnostico> diagnosticos;
 	
-	public Paciente(int id_paciente, String dNI, String nombre, String apellido, int edad, Date fecha,
+	public Paciente(Integer id_paciente, String dNI, String nombre, String apellido, int edad, Date fecha,
 			String sexo) {
 		super();
 		this.id_paciente = id_paciente;
@@ -136,6 +141,18 @@ public class Paciente implements Serializable
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.saveOrUpdate(paciente);
+            session.getTransaction().commit();
+            session.close();
+        }finally {
+	          
+	      }
+    }
+	
+	public static void persist(Paciente paciente) 
+	{    
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.persist(paciente);
             session.getTransaction().commit();
             session.close();
         }finally {
