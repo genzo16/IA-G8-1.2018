@@ -30,6 +30,7 @@
 		(allowed-values null
 						espondilitis_nula
 						artritis_psoriasica 
+						artritis_reactiva
 						colitis_ulcerosa
 						espodilo_artritis_juvenil
 						espondilo_artritis_indiferenciada)
@@ -185,6 +186,21 @@
 		then (modify ?diag (resultado "derivar"))//dermatologo
 	)
 )
+
+; 
+;(defrule dolor_comun
+;	?dolor<-(dolor(id_diagnostico ?id)(tipo null))
+;	?diag<-(diagnostico(id_diagnostico ?id)(resultado null))
+;=>(bind ?flag 0)
+;	(foreach  ?e $?enf 
+;	(if (and (eq ?e uveitis)(!= ?flag 1))
+;		then (modify ?dolor (tipo "ocular"))(bind ?flag 1)
+;	))
+;	(if (= ?flag 0)
+;		then (modify ?diag (resultado "derivar"))//oculista
+;	)
+;)
+
 ; DERIVACION
 (defrule derivar
 	(dolor(id_diagnostico ?id)(zona ?z_dolor))
@@ -208,9 +224,9 @@
 =>(bind ?flag 0)
 	(foreach  ?e $?ant 
 	(if (and (eq ?e psoriasis)(!= ?flag 1))
-		then (modify ?diag (resultado "Artritis psoriasica"))(bind ?flag 1))
+		then (modify ?diag (resultado "Artritis psoriasica")(resultado_espondilitis artritis_psoriasica))(bind ?flag 1));Artritis psoriasica
 	(if (and (eq ?e infeccion)(!= ?flag 1))
-		then (modify ?diag (resultado "Artritis reactiva"))(bind ?flag 1))
+		then (modify ?diag (resultado "Artritis reactiva")(resultado_espondilitis artritis_reactiva))(bind ?flag 1));Artritis reactiva
 	)
 )
 
@@ -221,7 +237,7 @@
 	?diag<-(diagnostico(id_diagnostico ?id)(resultado null))
 =>(foreach  ?e $?ant 
 	(if (eq ?e diarrea)
-		then (modify ?diag (resultado "ver gastroenterologo")))
+		then (modify ?diag  (resultado "derivar")))
 	)
 )
 
@@ -236,14 +252,14 @@
 		then (modify ?diag (resultado "test HLAB27"))(bind ?flag 1)
 	))
 	(if (= ?flag 0)
-		then (modify ?diag (resultado "ver oculista")))
+		then (modify ?diag  (resultado "derivar")))
 )
 
 (defrule HLAB27_test_A
 	?diag<-(diagnostico(id_diagnostico ?id)(resultado "test HLAB27")(resultado_espondilitis null)(grado_de_confianza ?gdc))
 	(estudio(tipo_estudio HLAB27)(resultado ?res))
 =>(if (= 0 (str-compare ?res si))
-then(modify ?diag (resultado "ver reumatologo")(grado_de_confianza (+ ?gdc 30))))
+then(modify ?diag  (resultado "derivar")(grado_de_confianza (+ ?gdc 30)))); reumatologo
 )
 
 (defrule evaluar_antecedentes_psoriasis
@@ -254,9 +270,9 @@ then(modify ?diag (resultado "ver reumatologo")(grado_de_confianza (+ ?gdc 30)))
 =>(bind ?flag 0)
 (foreach  ?e $?ant 
 	(if (eq ?e psoriasis)
-		then (modify ?diag (resultado "ver dermatologo"))(bind ?flag 1)))
+		then (modify ?diag  (resultado "derivar"))(bind ?flag 1)))// fin  dermatologo
 	(if (= ?flag 0)
-		then (modify ?diag (resultado "ver medico general -psoriasis")))
+		then (modify ?diag (resultado "derivar"))) ;"ver medico general -psoriasis")))
 )
 
 (defrule mayor_edad_limite_mecanico
@@ -265,7 +281,7 @@ then(modify ?diag (resultado "ver reumatologo")(grado_de_confianza (+ ?gdc 30)))
 	?diag<- (diagnostico (id_paciente ?id)(resultado null))
 =>(if (> ?x 45)
 then(modify ?diag (resultado "Problema degenerativo"));FIN
-else(modify ?diag (resultado "Derivar traumatologo"))));FIN
+else(modify ?diag  (resultado "derivar"))));FIN
 
 (defrule lumbar_inflamatorio
 	?dolor<-(dolor(id_diagnostico ?id)(tipo null)(zona lumbar)(inicio_dolor nocturno)(condicion_alivio actividad ))
@@ -277,15 +293,17 @@ else(modify ?diag (resultado "Derivar traumatologo"))));FIN
 	(paciente(edad ?x)(id_paciente ?id))
 	?diag<- (diagnostico (id_paciente ?id)(resultado "comprobar degenerativo"))
 =>(if (> ?x 45)
-then(modify ?diag (resultado "Consultar medico clinico"));FIN
+then(modify ?diag (resultado "derivar")); "Consultar medico clinico"));FIN
 else(modify ?diag (resultado "comprobar comp axial"))))
 
 (defrule compromiso_axial
 	?diag<-(diagnostico(id_diagnostico ?id)(resultado "comprobar comp axial"))
 	(dolor(tipo "lumbar inflamatorio")(recurrencia ?rec)(id_diagnostico ?id))
 =>(if (> ?rec 3) 
-then (modify ?diag (resultado "compromiso axial"))
-else (modify ?diag (resultado "reprogramar consulta"))))
+	then (modify ?diag (resultado "compromiso axial"))
+	else (modify ?diag (resultado "reprogramar consulta")); fin x recurrencia
+   )
+)
 
 (defrule antecedentes  
 	(paciente(edad ?x)(id_paciente ?id))
@@ -293,18 +311,20 @@ else (modify ?diag (resultado "reprogramar consulta"))))
 	?diag<- (diagnostico (id_paciente ?id)(resultado "compromiso axial"))
 =>(bind ?count 0)
 	(foreach  ?e $?ant
-      (bind ?count (+ ?count 1)))
+      (bind ?count (+ ?count 1))
+    )
 	(if (< ?count 2)
-		then(modify ?diag (resultado "realizar radiografia"))
-		else(modify ?diag (resultado "analisis lab HLAB27"))
-))
+		then(modify ?diag(resultado "reprogramar consulta") (estudio_solicitado "radiografia"))
+		else(modify ?diag(resultado "reprogramar consulta") (estudio_solicitado "HLAB27"))
+	)
+)
 
 (defrule radiografia
 	?diag<-(diagnostico(id_diagnostico ?id)(resultado "realizar radiografia"))
 	(estudio (tipo_estudio radiografia)(resultado ?res))
 =>(if (= 0 (str-compare ?res si)) 
 	then (modify ?diag (resultado "categorizar espondilitis"));rx sacroilitis
-	else (modify ?diag (resultado "espera resonancia")));rx normal
+	else (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "resonancia")));rx normal
 )
 
 (defrule lab_HLAB27
@@ -316,8 +336,8 @@ else (modify ?diag (resultado "reprogramar consulta"))))
 		then (modify ?diag (resultado "realizar radiografia"))
 		else (modify ?diag (resultado "no hay evidencia suficiente")));no definido
 	else (if (and (> ?ers 20.0)(> ?pcr 0.5))
-		then (modify ?diag (resultado "realizar radiografia"))
-		else (modify ?diag (resultado "realizar radiografia")))
+		then (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "radiografia"))
+		else (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "radiografia")))
 ))
 
 ;ESTUDIOS
@@ -340,7 +360,7 @@ else(modify ?diag (resultado "radiografia no concluyentes"))))
 	(estudio(tipo_estudio resonancia)(resultado ?res))
 =>(if (= 0 (str-compare ?res si))
 then(modify ?diag (resultado_espondilitis espondilo_artritis_indiferenciada)(grado_de_confianza 100)(resultado "categorizar espondilitis"))
-else(modify ?diag (resultado "derivar a reumatologo")(resultado_espondilitis espondilitis_nula)(grado_de_confianza 0))))
+else(modify ?diag (resultado "derivar")(resultado_espondilitis espondilitis_nula)(grado_de_confianza 0))))
 
 ;CATEGORIZACION
 (defrule esp_juvenil

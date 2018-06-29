@@ -58,7 +58,7 @@
                                                 <TextField fx:id="apellido" layoutX="103.0" layoutY="67.0" prefHeight="25.0" prefWidth="151.0" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="312.0" AnchorPane.topAnchor="67.0" />
                                                 <TextField fx:id="nombre" layoutX="104.0" layoutY="134.0" />
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="26.0" layoutY="99.0" prefHeight="25.0" prefWidth="73.0" text="DNI" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="467.0" AnchorPane.topAnchor="99.0" />
-                                                <TextField fx:id="nro_afiliado" layoutX="357.0" layoutY="134.0" promptText="Deje Id vacio para nuevo." />
+                                                <TextField fx:id="nro_afiliado" layoutX="357.0" layoutY="134.0" promptText="Id 0 para nuevo." text="0" />
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="103.0" prefHeight="17.0" prefWidth="85.0" text="Sexo" />
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="71.0" prefHeight="17.0" prefWidth="85.0" text="Apellido" AnchorPane.leftAnchor="14.0" />
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="138.0" prefHeight="17.0" prefWidth="85.0" text="Afiliado" />
@@ -118,10 +118,10 @@
                                                             </AnchorPane>
                                                             <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
                                                                <children>
-                                                                  <ChoiceBox fx:id="dolencia1" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="dolencia1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="articular" fx:value="articular" />
                                                                            <String fx:id="ocular" fx:value="ocular" />
                                                                            <String fx:id="Lumbar" fx:value="lumbar" />
@@ -132,27 +132,27 @@
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto1" prefWidth="130.0" value="Normal">
+                                                                  <ChoiceBox fx:id="aspecto1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Normal" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="colorado" fx:value="Colorado" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion1" prefWidth="130.0" value="Ninguna">
+                                                                  <ChoiceBox fx:id="inflamacion1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Ninguna" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="poca" fx:value="Poca" />
                                                                            <String fx:id="mucha" fx:value="Mucha" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="origen1" prefWidth="130.0" value="desconocido">
+                                                                  <ChoiceBox fx:id="origen1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="desconocido" />
+                                                                           <String fx:id="desconocido" fx:value="null" />
                                                                            <String fx:id="fisica" fx:value="peso" />
                                                                            <String fx:id="peso" fx:value="ejercicio" />
                                                                            <String fx:id="postura" fx:value="postura" />
@@ -160,20 +160,20 @@
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="mejora1" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="mejora1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="reposo" fx:value="reposo" />
                                                                            <String fx:id="actividad" fx:value="actividad" />
                                                                            <String fx:id="anti_inflamatorios" fx:value="anti_inflamatorios" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta1" prefWidth="130.0" value="No">
+                                                                  <ChoiceBox fx:id="despierta1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="No" />
+                                                                           <String fx:id="no" fx:value="null" />
                                                                            <String fx:id="si" fx:value="Si" />
                                                                         </FXCollections>
                                                                      </items>
@@ -184,10 +184,10 @@
                                                             </VBox>
                                                             <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
                                                                <children>
-                                                                  <ChoiceBox fx:id="dolencia2" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="dolencia2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="articular" fx:value="Articular" />
                                                                            <String fx:id="ocular" fx:value="Ocular" />
                                                                            <String fx:id="columna_lumbar" fx:value="Columna lumbar" />
@@ -198,46 +198,46 @@
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto2" prefWidth="130.0" value="Normal">
+                                                                  <ChoiceBox fx:id="aspecto2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Normal" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="colorado" fx:value="Colorado" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion2" prefWidth="130.0" value="Ninguna">
+                                                                  <ChoiceBox fx:id="inflamacion2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Ninguna" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="poca" fx:value="Poca" />
                                                                            <String fx:id="mucha" fx:value="Mucha" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="origen2" prefWidth="130.0" value="Desconocido">
+                                                                  <ChoiceBox fx:id="origen2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="Desconocido" />
+                                                                           <String fx:id="desconocido" fx:value="null" />
                                                                            <String fx:id="fisica" fx:value="Actividad física" />
                                                                            <String fx:id="peso" fx:value="Levantó peso" />
                                                                            <String fx:id="postura" fx:value="Mala postura" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="mejora2" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="mejora2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="reposo" fx:value="En reposo" />
                                                                            <String fx:id="actividad" fx:value="Con actividad" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta2" prefWidth="130.0" value="No">
+                                                                  <ChoiceBox fx:id="despierta2" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="No" />
+                                                                           <String fx:id="no" fx:value="null" />
                                                                            <String fx:id="si" fx:value="Si" />
                                                                         </FXCollections>
                                                                      </items>
@@ -248,10 +248,10 @@
                                                             </VBox>
                                                             <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
                                                                <children>
-                                                                  <ChoiceBox fx:id="dolencia3" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="dolencia3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="articular" fx:value="Articular" />
                                                                            <String fx:id="ocular" fx:value="Ocular" />
                                                                            <String fx:id="columna_lumbar" fx:value="Columna lumbar" />
@@ -262,46 +262,46 @@
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto3" prefWidth="130.0" value="Normal">
+                                                                  <ChoiceBox fx:id="aspecto3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Normal" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="colorado" fx:value="Colorado" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion3" prefWidth="130.0" value="Ninguna">
+                                                                  <ChoiceBox fx:id="inflamacion3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="Ninguna" />
+                                                                           <String fx:id="normal" fx:value="null" />
                                                                            <String fx:id="poca" fx:value="Poca" />
                                                                            <String fx:id="mucha" fx:value="Mucha" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="origen3" prefWidth="130.0" value="Desconocido">
+                                                                  <ChoiceBox fx:id="origen3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="Desconocido" />
+                                                                           <String fx:id="desconocido" fx:value="null" />
                                                                            <String fx:id="fisica" fx:value="Actividad física" />
                                                                            <String fx:id="peso" fx:value="Levantó peso" />
                                                                            <String fx:id="postura" fx:value="Mala postura" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="mejora3" prefWidth="130.0" value="-">
+                                                                  <ChoiceBox fx:id="mejora3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="-" />
+                                                                           <String fx:id="nada" fx:value="null" />
                                                                            <String fx:id="reposo" fx:value="En reposo" />
                                                                            <String fx:id="actividad" fx:value="Con actividad" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta3" prefWidth="130.0" value="No">
+                                                                  <ChoiceBox fx:id="despierta3" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="No" />
+                                                                           <String fx:id="no" fx:value="null" />
                                                                            <String fx:id="si" fx:value="Si" />
                                                                         </FXCollections>
                                                                      </items>
@@ -317,10 +317,10 @@
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
                                                       <Label layoutX="143.0" layoutY="34.0" text="Ritmo evacuatorio:" />
-                                                      <ChoiceBox fx:id="ritmo" layoutX="267.0" layoutY="30.0" prefWidth="150.0" value="Normal">
+                                                      <ChoiceBox fx:id="ritmo" layoutX="267.0" layoutY="30.0" prefWidth="150.0" value="null">
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="normal" fx:value="Normal" />
+                                                               <String fx:id="normal" fx:value="null" />
                                                                <String fx:id="diarrea" fx:value="Diarrea" />
                                                                <String fx:id="moco" fx:value="Moco" />
                                                                <String fx:id="pus" fx:value="Pus" />

@@ -127,40 +127,16 @@ public class Main extends Application
 	// Este es el paciente cargado actualmente
 	private Paciente actual = null;
 	
-	@FXML
-	void onCargar(ActionEvent event) 
-	{
-		actual = lPacientes.getSelectionModel().getSelectedItem();
-		apellido.setText(actual.getApellido());
-		nombre.setText(actual.getNombre());
-		edad.setText(actual.getEdad().toString());
-		dni.setText(actual.getDNI());
-		nro_afiliado.setText(actual.getId_paciente().toString());
-		if(actual.getSexo().equals("masculino"))
-			sexo.getSelectionModel().select(1);
-		else
-			sexo.getSelectionModel().select(2);
-	}
-	
-	@FXML
-	void AcrualizarListaPacientes(ActionEvent event) 
-	{		
-		lPacientes.getItems().clear();
-		for(Paciente p :HibernateUtils.listPacientes()) // DerbyUtils.LoadPacientes()
-			lPacientes.getItems().add(p);
-		lPacientes.getSelectionModel().selectFirst();
-	}
 	
 	@FXML
 	void onAdvance(ActionEvent event) 
 	{
 		System.out.println("onAdvance");
 		String entrada=null;
-		String resultado=null;
-		MultifieldValue pv=null;
+		
 		switch(pestaña)
 		{
-		case 0:
+		case 0:// Entrada de datos de paciente
 			String nombre   = this.nombre.getText();
 	    	String apellido = this.apellido.getText();
 	    	String edad     = this.edad.getText();
@@ -171,63 +147,19 @@ public class Main extends Application
 	    	ClipsHandler.getInstance().assertString(entrada);
 	    	
 	    	ClipsHandler.getInstance().assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
-	    //	ClipsHandler.getInstance().reset();
 	    	ClipsHandler.getInstance().run();
-	    	resultado=null;
-			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");
-			
-			try {
-				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
-			} catch (Exception e1) {
-				System.out.println("Failure with CLIPS output.");
-				//e1.printStackTrace();
-			}
-			
-			// TODO: mostrar esta salida via javaFX
-			System.out.println(resultado);
-		/*	if(resultado.equals("derivacion"))
-			{
-				
-			}else {*/
-				ClipsHandler.getInstance().eval("(facts)");
-				tabContainer.getSelectionModel().select(1);
-				pestaña = 1;// ->pestaña Sintomas
+			onAvanzar(0);
 			break;
 		case 1:
-		//	Dolencia1 d1 = new Dolencia1();
-		//	d1.grabFromGUI();
 	    	
 	    	entrada = "(dolor(id_diagnostico 1)(zona " + dolencia1.getValue()+ ")(inicio_dolor " +  origen1.getValue()+ ")(condicion_alivio " 
 	    			+  mejora1.getValue() + ")(recurrencia "+ persiste1.getText()+"))";
 	    	System.out.println(entrada);
 	    	ClipsHandler.getInstance().assertString(entrada);
 	    	
-	    //	ClipsHandler.getInstance().reset();
 	    	ClipsHandler.getInstance().run();
-	    	resultado=null;
-			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");
 			
-			try {
-				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
-			} catch (Exception e1) {
-				System.out.println("Failure with CLIPS output.");
-				//e1.printStackTrace();
-			}
-			ClipsHandler.getInstance().eval("(facts)");
-			// TODO: mostrar esta salida via javaFX
-			System.out.println(resultado);
-			
-			if(resultado.equals("derivacion"))
-			{
-				onMostrarResultados();
-				tabContainer.getSelectionModel().select(4);
-				pestaña = 4;// ->pestaña Resultados
-			}else {
-				tabContainer.getSelectionModel().select(2);
-				pestaña = 2;// ->pestaña Antecedentes
-			}
+			onAvanzar(1);
 			break;
 		case 2:
 		    String enfermedades = "";
@@ -274,35 +206,8 @@ public class Main extends Application
 	    	System.out.println(entrada);
 	    	ClipsHandler.getInstance().assertString(entrada);
 	    	
-	    	
-	    //	ClipsHandler.getInstance().reset();
 	    	ClipsHandler.getInstance().run();
-	    	resultado=null;
-			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");
-			
-			try {
-				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
-			} catch (Exception e1) {
-				System.out.println("Failure with CLIPS output.");
-				//e1.printStackTrace();
-			}
-			ClipsHandler.getInstance().eval("(facts)");
-			// TODO: mostrar esta salida via javaFX
-			System.out.println(resultado);
-			System.out.println("\"derivacion\"");
-			//TODO: Definir si va a resultados o estudios
-			
-			
-			if(resultado.equals("\"derivacion\""))
-			{
-				onMostrarResultados();
-				tabContainer.getSelectionModel().select(4);
-				pestaña = 4;// ->pestaña Resultados
-			}else {
-				tabContainer.getSelectionModel().select(3);
-				pestaña = 3;// ->pestaña Estudios
-			}
+			onAvanzar(2);
 			break;
 		case 3:
 			if(gen.isSelected())
@@ -325,27 +230,39 @@ public class Main extends Application
 					ClipsHandler.getInstance().assertString("(estudio (id_estudio 1)(id_paciente 1)(resultado "+reso_resultado.getValue() +")(tipo_estudio resonancia))");	
 			}
 	    	ClipsHandler.getInstance().run();
-	    	resultado=null;
-			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");
-			
-			try {
-				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();//resultado_primera_etapa
-			} catch (Exception e1) {
-				System.out.println("Failure with CLIPS output.");
-				//e1.printStackTrace();
-			}
-			ClipsHandler.getInstance().eval("(facts)");
-			// TODO: mostrar esta salida via javaFX
-			System.out.println(resultado);
-			
-			onMostrarResultados();
-			tabContainer.getSelectionModel().select(4);
-			pestaña = 4;// ->pestaña resultados
+			onAvanzar(3);
 			break;
 		default:
 		}
 		
+	}
+	
+	private void onAvanzar(int pestaña_actual)
+	{
+		String resultado=null;
+		MultifieldValue pv=null;
+		// Obtener resultados de CLIPS
+		pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");	
+		try {
+			FactAddressValue fav =(FactAddressValue)pv.get(0);
+			resultado = fav.getFactSlot("resultado").toString();
+		} catch (Exception e1) {
+			System.out.println("Failure with CLIPS output.");
+		}
+		ClipsHandler.getInstance().eval("(facts)");
+		System.out.println(resultado);
+		
+		if(resultado.equals("\"derivacion\"") | resultado.equals("\"reprogramar consulta\"") |  resultado.equals("\"diagnostico final\""))
+		{
+			onMostrarResultados();
+			tabContainer.getSelectionModel().select(4);
+			pestaña = 4;// ->pestaña Resultados
+		}else {
+			pestaña = pestaña_actual+1;
+			tabContainer.getSelectionModel().select(pestaña);
+			if(pestaña==4)
+				onMostrarResultados();
+		}
 	}
 	
 	private void onMostrarResultados()
@@ -365,7 +282,6 @@ public class Main extends Application
 			antecedente_si_no.setText("ninguno");
 		} catch (Exception e1) {
 			System.out.println("Failure with CLIPS output.");
-			//e1.printStackTrace();
 		}
 		
 		pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J antecedente_familiar))TRUE)");	
@@ -380,7 +296,6 @@ public class Main extends Application
 			
 		} catch (Exception e1) {
 			System.out.println("Failure with CLIPS output.");
-			//e1.printStackTrace();
 		}
 	}
 	
@@ -390,6 +305,30 @@ public class Main extends Application
 		ClipsHandler.getInstance().reset();
 		tabContainer.getSelectionModel().select(0);
 		pestaña = 0;// ->pestaña Estudios
+	}
+	
+	@FXML
+	void onCargar(ActionEvent event) 
+	{
+		actual = lPacientes.getSelectionModel().getSelectedItem();
+		apellido.setText(actual.getApellido());
+		nombre.setText(actual.getNombre());
+		edad.setText(actual.getEdad().toString());
+		dni.setText(actual.getDNI());
+		nro_afiliado.setText(actual.getId_paciente().toString());
+		if(actual.getSexo().equals("masculino"))
+			sexo.getSelectionModel().select(1);
+		else
+			sexo.getSelectionModel().select(2);
+	}
+	
+	@FXML
+	void ActualizarListaPacientes(ActionEvent event) 
+	{		
+		lPacientes.getItems().clear();
+		for(Paciente p :HibernateUtils.listPacientes()) // DerbyUtils.LoadPacientes()
+			lPacientes.getItems().add(p);
+		lPacientes.getSelectionModel().selectFirst();
 	}
 	
 	@FXML
@@ -404,19 +343,18 @@ public class Main extends Application
 			actual = new Paciente(null, dni.getText(), nombre.getText(), apellido.getText(),
 					Integer.parseInt(edad.getText()), date, sexo.getSelectionModel().getSelectedItem());
 		}
-		if(actual.getId_paciente()==null) 
+		actual.setId_paciente(Integer.parseInt(nro_afiliado.getText()));
+		if(actual.getId_paciente()==0) 
 		{
-			Paciente.persist(actual);
-		}else {
-			actual.setApellido(apellido.getText());
-			actual.setNombre(nombre.getText());
-			actual.setDNI(dni.getText());
-			actual.setEdad(Integer.parseInt(edad.getText()));
-			actual.setSexo(sexo.getSelectionModel().getSelectedItem());
-			Paciente.saveOrUpdate(actual);
+			actual.setId_paciente(null);
 		}
+		actual.setApellido(apellido.getText());
+		actual.setNombre(nombre.getText());
+		actual.setDNI(dni.getText());
+		actual.setEdad(Integer.parseInt(edad.getText()));
+		actual.setSexo(sexo.getSelectionModel().getSelectedItem());
 		Paciente.saveOrUpdate(actual);
-		AcrualizarListaPacientes(null);
+		ActualizarListaPacientes(null);
 	}
 	
 	
@@ -427,7 +365,7 @@ public class Main extends Application
 		Derby.getInstance().initialize();
 		ClipsHandler.init();
 		HibernateUtils.getSessionFactory();
-		AcrualizarListaPacientes(null);
+		ActualizarListaPacientes(null);
 	}
 	
 	@Override
@@ -455,6 +393,7 @@ public class Main extends Application
 		FX_CLIPS_output router = new FX_CLIPS_output("FXrouter");//WTRACE
 		router.setTextFlow(tf1, tf2);
 		ClipsHandler.getInstance().addRouter(router);
+	//	ClipsHandler.getInstance().
 	}
 	
 	@Override

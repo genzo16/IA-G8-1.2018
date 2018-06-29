@@ -1,0 +1,5 @@
+@charset "ISO-8859-1";
+.bodybg{
+      -fx-background-image: url('med_back.jpg');
+      -fx-background-size: 100% 100%;
+}
