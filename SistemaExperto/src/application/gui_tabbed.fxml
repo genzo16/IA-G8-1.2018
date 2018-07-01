@@ -14,9 +14,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-      <ImageView fitHeight="768.0" fitWidth="1024.0" opacity="0.75" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="768.0" fitWidth="1024.0" opacity="0.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../../resources/med_back.jpg" />
+            <Image url="@../resources/med_back.jpg" />
          </image>
       </ImageView>
       <TabPane prefHeight="450.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -43,14 +43,14 @@
                                                       </LinearGradient>
                                                    </fill>
                                                 </Rectangle>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="252.0" layoutX="-3.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="252.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.leftAnchor="-3.0" AnchorPane.topAnchor="0.0" />
                                                 <TextField fx:id="edad" layoutX="357.0" layoutY="67.0" />
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="71.0" prefHeight="17.0" prefWidth="85.0" text="Edad" />
                                                 <ChoiceBox fx:id="sexo" layoutX="357.0" layoutY="99.0" prefWidth="150.0" value="Masculino">
                                                    <items>
                                                       <FXCollections fx:factory="observableArrayList">
-                                                         <String fx:id="femenino" fx:value="Femenino" />
-                                                         <String fx:id="masculino" fx:value="Masculino" />
+                                                         <String fx:value="Femenino" />
+                                                         <String fx:value="Masculino" />
                                                       </FXCollections>
                                                    </items>
                                                 </ChoiceBox>
@@ -64,22 +64,22 @@
                                                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="258.0" layoutY="138.0" prefHeight="17.0" prefWidth="85.0" text="Afiliado" />
                                                 <TextField fx:id="dni" layoutX="104.0" layoutY="99.0" promptText="DNI" AnchorPane.leftAnchor="104.0" AnchorPane.topAnchor="99.0" />
                                                 <Button layoutX="357.0" layoutY="175.0" mnemonicParsing="false" onAction="#onSave" prefHeight="25.0" prefWidth="149.0" text="Nuevo/Actualizar" />
-                                                <Text fontSmoothingType="LCD" layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INGRESO DE PACIENTE" wrappingWidth="406.13671875">
+                                                <Text fontSmoothingType="LCD" layoutX="26.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INGRESO DE PACIENTE" wrappingWidth="406.13671875">
                                                    <font>
-                                                      <Font name="System Bold Italic" size="30.0" />
-                                                   </font>
-                                                </Text>
+                                                      <Font name="Linux Biolinum G Italic" size="30.0" />
+                                                   </font></Text>
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane layoutX="21.0" layoutY="281.0" prefHeight="97.0" prefWidth="562.0">
                                              <children>
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="252.0" layoutX="-6.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" />
                                                 <ChoiceBox fx:id="lPacientes" layoutX="106.0" layoutY="49.0" prefWidth="150.0">
                                                    <items>
                                                         <FXCollections fx:factory="observableArrayList">
                                                 </FXCollections>
                                                    </items>
                                                 </ChoiceBox>
-                                                <Button fx:id="cargar" layoutX="268.0" layoutY="49.0" mnemonicParsing="false" onAction="#onCargar" text="Cargar" />
+                                                <Button layoutX="268.0" layoutY="49.0" mnemonicParsing="false" onAction="#onCargar" text="Cargar" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -88,14 +88,28 @@
                               </Tab>
                               <Tab text="Sintomas">
                                 <content>
-                                  <AnchorPane maxHeight="390.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                  <AnchorPane maxHeight="592.0" minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1024.0">
                                        <children>
                                           <VBox layoutX="20.0" layoutY="20.0" prefHeight="390.0" prefWidth="560.0">
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <AnchorPane>
                                                    <children>
-                                                      <Label text="Dolencias:" />
-                                                      <HBox layoutX="8.0" layoutY="28.0" prefHeight="254.0" prefWidth="552.0" spacing="7.0">
+                                                      <Rectangle arcHeight="5.0" height="44.0" layoutX="-6.0" layoutY="14.0" stroke="#ffffff00" strokeType="INSIDE" width="992.0">
+                                                         <fill>
+                                                            <LinearGradient endX="1.0" endY="1.0" startX="0.5047619047619047">
+                                                               <stops>
+                                                                  <Stop color="#0088ff" />
+                                                                  <Stop color="TRANSPARENT" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </fill>
+                                                      </Rectangle>
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="564.0" layoutX="-6.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" />
+                                                      <Label blendMode="MULTIPLY" layoutX="27.0" layoutY="18.0" text="DOLENCIAS">
+                                                         <font>
+                                                            <Font name="Linux Biolinum G Italic" size="30.0" />
+                                                         </font></Label>
+                                                      <HBox layoutX="27.0" layoutY="70.0" prefHeight="254.0" prefWidth="552.0" spacing="7.0">
                                                          <children>
                                                             <AnchorPane prefHeight="200.0" prefWidth="140.0">
                                                                <children>
@@ -121,213 +135,69 @@
                                                                   <ChoiceBox fx:id="dolencia1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="articular" fx:value="articular" />
-                                                                           <String fx:id="ocular" fx:value="ocular" />
-                                                                           <String fx:id="Lumbar" fx:value="lumbar" />
-                                                                           <String fx:id="Dorsal" fx:value="dorsal" />
-                                                                           <String fx:id="Cervical" fx:value="cervical" />
-                                                                           <String fx:id="intestinal" fx:value="intestinal" />
-                                                                           <String fx:id="piel" fx:value="enrojecimiento_manchas" />	
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="articular" />
+                                                                           <String fx:value="ocular" />
+                                                                           <String fx:value="lumbar" />
+                                                                           <String fx:value="dorsal" />
+                                                                           <String fx:value="cervical" />
+                                                                           <String fx:value="intestinal" />
+                                                                           <String fx:value="enrojecimiento_manchas" />	
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto1" prefWidth="130.0" value="null">
+                                                                  <ChoiceBox prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="colorado" fx:value="Colorado" />
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="Colorado" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion1" prefWidth="130.0" value="null">
+                                                                  <ChoiceBox prefHeight="25.0" prefWidth="132.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="poca" fx:value="Poca" />
-                                                                           <String fx:id="mucha" fx:value="Mucha" />
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="Poca" />
+                                                                           <String fx:value="Mucha" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
                                                                   <ChoiceBox fx:id="origen1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="null" />
-                                                                           <String fx:id="fisica" fx:value="peso" />
-                                                                           <String fx:id="peso" fx:value="ejercicio" />
-                                                                           <String fx:id="postura" fx:value="postura" />
-                                                                           <String fx:id="nocturno" fx:value="nocturno" />
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="peso" />
+                                                                           <String fx:value="ejercicio" />
+                                                                           <String fx:value="postura" />
+                                                                           <String fx:value="nocturno" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
                                                                   <ChoiceBox fx:id="mejora1" prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="reposo" fx:value="reposo" />
-                                                                           <String fx:id="actividad" fx:value="actividad" />
-                                                                           <String fx:id="anti_inflamatorios" fx:value="anti_inflamatorios" />
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="reposo" />
+                                                                           <String fx:value="actividad" />
+                                                                           <String fx:value="anti_inflamatorios" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta1" prefWidth="130.0" value="null">
+                                                                  <ChoiceBox prefWidth="130.0" value="null">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="null" />
-                                                                           <String fx:id="si" fx:value="Si" />
+                                                                           <String fx:value="null" />
+                                                                           <String fx:value="Si" />
                                                                         </FXCollections>
                                                                      </items>
                                                                   </ChoiceBox>
-                                                                  <TextField fx:id="edad1" promptText="(años)" text="0" />
+                                                                  <TextField promptText="(años)" text="0" />
                                                                   <TextField fx:id="persiste1" promptText="(meses)" text="0" />
-                                                               </children>
-                                                            </VBox>
-                                                            <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
-                                                               <children>
-                                                                  <ChoiceBox fx:id="dolencia2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="articular" fx:value="Articular" />
-                                                                           <String fx:id="ocular" fx:value="Ocular" />
-                                                                           <String fx:id="columna_lumbar" fx:value="Columna lumbar" />
-                                                                           <String fx:id="columna_dorsal" fx:value="Columna dorsal" />
-                                                                           <String fx:id="columna_cervical" fx:value="Columna cervical" />
-                                                                           <String fx:id="intestinal" fx:value="Intestinal" />
-                                                                           <String fx:id="piel" fx:value="piel" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="colorado" fx:value="Colorado" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="poca" fx:value="Poca" />
-                                                                           <String fx:id="mucha" fx:value="Mucha" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="origen2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="null" />
-                                                                           <String fx:id="fisica" fx:value="Actividad física" />
-                                                                           <String fx:id="peso" fx:value="Levantó peso" />
-                                                                           <String fx:id="postura" fx:value="Mala postura" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="mejora2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="reposo" fx:value="En reposo" />
-                                                                           <String fx:id="actividad" fx:value="Con actividad" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta2" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="null" />
-                                                                           <String fx:id="si" fx:value="Si" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <TextField fx:id="edad2" promptText="(años)" text="0" />
-                                                                  <TextField fx:id="persiste2" promptText="(meses)" text="0" />
-                                                               </children>
-                                                            </VBox>
-                                                            <VBox prefHeight="200.0" prefWidth="130.0" spacing="3.0">
-                                                               <children>
-                                                                  <ChoiceBox fx:id="dolencia3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="articular" fx:value="Articular" />
-                                                                           <String fx:id="ocular" fx:value="Ocular" />
-                                                                           <String fx:id="columna_lumbar" fx:value="Columna lumbar" />
-                                                                           <String fx:id="columna_dorsal" fx:value="Columna dorsal" />
-                                                                           <String fx:id="columna_cervical" fx:value="Columna cervical" />
-                                                                           <String fx:id="intestinal" fx:value="Intestinal" />
-                                                                           <String fx:id="piel" fx:value="piel" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="aspecto3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="colorado" fx:value="Colorado" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="inflamacion3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="normal" fx:value="null" />
-                                                                           <String fx:id="poca" fx:value="Poca" />
-                                                                           <String fx:id="mucha" fx:value="Mucha" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="origen3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="desconocido" fx:value="null" />
-                                                                           <String fx:id="fisica" fx:value="Actividad física" />
-                                                                           <String fx:id="peso" fx:value="Levantó peso" />
-                                                                           <String fx:id="postura" fx:value="Mala postura" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="mejora3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="nada" fx:value="null" />
-                                                                           <String fx:id="reposo" fx:value="En reposo" />
-                                                                           <String fx:id="actividad" fx:value="Con actividad" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <ChoiceBox fx:id="despierta3" prefWidth="130.0" value="null">
-                                                                     <items>
-                                                                        <FXCollections fx:factory="observableArrayList">
-                                                                           <String fx:id="no" fx:value="null" />
-                                                                           <String fx:id="si" fx:value="Si" />
-                                                                        </FXCollections>
-                                                                     </items>
-                                                                  </ChoiceBox>
-                                                                  <TextField fx:id="edad3" promptText="(años)" text="0" />
-                                                                  <TextField fx:id="persiste3" promptText="(meses)" text="0" />
                                                                </children>
                                                             </VBox>
                                                          </children>
                                                       </HBox>
-                                                   </children>
-                                                </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label layoutX="143.0" layoutY="34.0" text="Ritmo evacuatorio:" />
-                                                      <ChoiceBox fx:id="ritmo" layoutX="267.0" layoutY="30.0" prefWidth="150.0" value="null">
-                                                         <items>
-                                                            <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="normal" fx:value="null" />
-                                                               <String fx:id="diarrea" fx:value="Diarrea" />
-                                                               <String fx:id="moco" fx:value="Moco" />
-                                                               <String fx:id="pus" fx:value="Pus" />
-                                                               <String fx:id="ritmo_sangre" fx:value="Sangre" />
-                                                            </FXCollections>
-                                                         </items>
-                                                      </ChoiceBox>
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -339,11 +209,22 @@
                                 <content>
                                   <AnchorPane maxHeight="390.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <HBox prefHeight="480.0" prefWidth="600.0">
+                                          <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="299.0">
+                                                <AnchorPane prefHeight="556.0" prefWidth="517.0">
                                                    <children>
-                                                      <Label layoutX="30.0" layoutY="30.0" text="Antecedentes del paciente:" />
+                                                      <Rectangle arcHeight="5.0" height="42.0" layoutX="22.0" layoutY="26.0" stroke="#ffffff00" strokeType="INSIDE" width="474.0">
+                                                         <fill>
+                                                            <LinearGradient endX="1.0" endY="1.0" startX="0.5047619047619047">
+                                                               <stops>
+                                                                  <Stop color="#0088ff" />
+                                                                  <Stop color="TRANSPARENT" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </fill>
+                                                      </Rectangle>
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="558.0" stroke="BLACK" strokeType="INSIDE" width="485.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="20.0" />
+                                                      <Label blendMode="MULTIPLY" layoutX="30.0" layoutY="30.0" text="Antecedentes del paciente:" />
                                                       <VBox layoutX="30.0" layoutY="75.0" prefHeight="344.0" prefWidth="194.0" spacing="7.0">
                                                          <children>
                                                             <CheckBox fx:id="p_dactilitis" mnemonicParsing="false" text="Dactilitis" />
@@ -357,16 +238,23 @@
                                                             <CheckBox fx:id="ante_colitis" disable="true" mnemonicParsing="false" text="Colitis" visible="false" />
                                                          </children>
                                                       </VBox>
-                                                      <Label layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
+                                                      <Label blendMode="MULTIPLY" layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
                                                    </children>
                                                 </AnchorPane>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" stroke="#808080" strokeType="INSIDE" width="1.0">
-                                                   <HBox.margin>
-                                                      <Insets top="15.0" />
-                                                   </HBox.margin></Rectangle>
-                                                <AnchorPane prefHeight="200.0" prefWidth="299.0">
+                                                <AnchorPane prefHeight="480.0" prefWidth="407.0">
                                                    <children>
-                                                      <Label layoutX="30.0" layoutY="30.0" text="Antecedentes familiares:" />
+                                                      <Rectangle arcHeight="5.0" height="42.0" layoutX="6.0" layoutY="26.0" stroke="#ffffff00" strokeType="INSIDE" width="490.0">
+                                                         <fill>
+                                                            <LinearGradient endX="1.0" endY="1.0" startX="0.5047619047619047">
+                                                               <stops>
+                                                                  <Stop color="#0088ff" />
+                                                                  <Stop color="TRANSPARENT" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </fill>
+                                                      </Rectangle>
+                                                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="558.0" layoutX="6.0" stroke="BLACK" strokeType="INSIDE" width="477.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="20.0" />
+                                                      <Label blendMode="MULTIPLY" layoutX="30.0" layoutY="30.0" text="Antecedentes familiares:" />
                                                       <VBox layoutX="30.0" layoutY="75.0" prefHeight="344.0" prefWidth="194.0" spacing="7.0">
                                                          <children>
                                                             <CheckBox fx:id="f_diarrea" mnemonicParsing="false" text="Enfermedad de Crohn" />
@@ -379,7 +267,7 @@
                                                             <CheckBox fx:id="ante_juv" disable="true" mnemonicParsing="false" text="Espondilitis Juvenil" visible="false" />
                                                          </children>
                                                       </VBox>
-                                                      <Label layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
+                                                      <Label blendMode="MULTIPLY" layoutX="30.0" layoutY="47.0" text="(Seleccione todas las que apliquen)" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -398,7 +286,7 @@
                                                       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="150.0" stroke="BLACK" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <TextField fx:id="sangre_pcr" layoutX="330.0" layoutY="70.0" promptText="(ml/dl)" />
                                                       <CheckBox fx:id="sangre" layoutX="10.0" mnemonicParsing="false" text="Sangre" AnchorPane.topAnchor="10.0" />
-                                                      <TextField fx:id="sangre_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
+                                                      <TextField layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
                                                       <Label layoutX="160.0" layoutY="10.0" text="Fecha del estudio" />
                                                       <Label layoutX="160.0" layoutY="42.0" text="ERS (Eritrosedimentacion)" />
                                                       <Label layoutX="160.0" layoutY="74.0" text="PCR (Proteina C Reactiva)" />
@@ -409,14 +297,14 @@
                                                    <children>
                                                       <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="#00000040" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <CheckBox fx:id="gen" layoutX="10.0" mnemonicParsing="false" text="Genético" AnchorPane.topAnchor="10.0" />
-                                                      <TextField fx:id="gen_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
+                                                      <TextField layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
                                                       <Label layoutX="160.0" layoutY="10.0" text="Fecha del estudio" />
                                                       <Label layoutX="160.0" layoutY="42.0" text="Resultado HLA B27" />
                                                       <ChoiceBox fx:id="gen_resultado" layoutX="330.0" layoutY="38.0" prefWidth="150.0">
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="positivo" fx:value="si" />
-                                                               <String fx:id="negativo" fx:value="no" />
+                                                               <String fx:value="si" />
+                                                               <String fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
@@ -432,15 +320,15 @@
                                                    <children>
                                                       <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="MULTIPLY" fill="#00000040" height="150.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                       <CheckBox fx:id="imagen" layoutX="10.0" mnemonicParsing="false" text="Imágenes" AnchorPane.topAnchor="10.0" />
-                                                      <TextField fx:id="imagen_fecha" layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
+                                                      <TextField layoutX="330.0" layoutY="6.0" promptText="DD/MM/AAAA" />
                                                       <Label layoutX="160.0" layoutY="10.0" text="Fecha del estudio" />
                                                       <Label layoutX="160.0" layoutY="42.0" text="Radiografía" />
                                                       <ChoiceBox fx:id="radio_resultado" layoutX="330.0" layoutY="38.0" prefWidth="150.0">
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="nada" fx:value="-" />
-                                                               <String fx:id="positivo" fx:value="si" />
-                                                               <String fx:id="negativo" fx:value="no" />
+                                                               <String fx:value="-" />
+                                                               <String fx:value="si" />
+                                                               <String fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
@@ -448,9 +336,9 @@
                                                       <ChoiceBox fx:id="reso_resultado" layoutX="330.0" layoutY="70.0" prefWidth="150.0">
                                                          <items>
                                                             <FXCollections fx:factory="observableArrayList">
-                                                               <String fx:id="nada" fx:value="-" />
-                                                               <String fx:id="positivo" fx:value="si" />
-                                                               <String fx:id="negativo" fx:value="no" />
+                                                               <String fx:value="-" />
+                                                               <String fx:value="si" />
+                                                               <String fx:value="no" />
                                                             </FXCollections>
                                                          </items>
                                                       </ChoiceBox>
@@ -472,7 +360,22 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <VBox fillWidth="false" layoutX="70.0" layoutY="70.0" prefHeight="200.0" prefWidth="450.0">
+                                          <Rectangle arcHeight="5.0" height="44.0" layoutX="16.0" layoutY="26.0" stroke="#ffffff00" strokeType="INSIDE" width="992.0">
+                                             <fill>
+                                                <LinearGradient endX="1.0" endY="1.0" startX="0.5047619047619047">
+                                                   <stops>
+                                                      <Stop color="#0088ff" />
+                                                      <Stop color="TRANSPARENT" offset="1.0" />
+                                                   </stops>
+                                                </LinearGradient>
+                                             </fill>
+                                          </Rectangle>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000040" height="570.0" layoutX="16.0" layoutY="14.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" width="992.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="14.0" />
+                                          <Text fontSmoothingType="LCD" layoutX="40.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DIAGNOSTICO" wrappingWidth="406.13671875">
+                                             <font>
+                                                <Font name="Linux Biolinum G Italic" size="30.0" />
+                                             </font></Text>
+                                          <VBox fillWidth="false" layoutX="62.0" layoutY="155.0" prefHeight="374.0" prefWidth="546.0">
                                              <children>
                                                 <AnchorPane prefHeight="30.0" prefWidth="500.0">
                                                    <children>
@@ -526,7 +429,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="599.0" prefWidth="1024.0">
                      <children>
-                        <HBox prefHeight="611.0" prefWidth="1024.0" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox opacity="0.75" prefHeight="611.0" prefWidth="1024.0" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <ScrollPane prefHeight="639.0" prefWidth="652.0">
                                  <content>

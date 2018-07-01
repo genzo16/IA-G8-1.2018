@@ -249,7 +249,7 @@
 =>(bind ?flag 0)
 	(foreach  ?e $?ant 
 	(if (eq ?e uveitis)
-		then (modify ?diag (resultado "test HLAB27"))(bind ?flag 1)
+		then (modify ?diag (resultado "realizar estudios")(estudio_solicitado "test HLAB27"))(bind ?flag 1)
 	))
 	(if (= ?flag 0)
 		then (modify ?diag  (resultado "derivar")))
@@ -314,8 +314,8 @@ else(modify ?diag (resultado "comprobar comp axial"))))
       (bind ?count (+ ?count 1))
     )
 	(if (< ?count 2)
-		then(modify ?diag(resultado "reprogramar consulta") (estudio_solicitado "radiografia"))
-		else(modify ?diag(resultado "reprogramar consulta") (estudio_solicitado "HLAB27"))
+		then(modify ?diag(resultado "realizar estudios") (estudio_solicitado "radiografia"))
+		else(modify ?diag(resultado "realizar estudios") (estudio_solicitado "HLAB27"))
 	)
 )
 
@@ -324,7 +324,7 @@ else(modify ?diag (resultado "comprobar comp axial"))))
 	(estudio (tipo_estudio radiografia)(resultado ?res))
 =>(if (= 0 (str-compare ?res si)) 
 	then (modify ?diag (resultado "categorizar espondilitis"));rx sacroilitis
-	else (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "resonancia")));rx normal
+	else (modify ?diag (resultado "realizar estudios") (estudio_solicitado "resonancia")));rx normal
 )
 
 (defrule lab_HLAB27
@@ -336,8 +336,8 @@ else(modify ?diag (resultado "comprobar comp axial"))))
 		then (modify ?diag (resultado "realizar radiografia"))
 		else (modify ?diag (resultado "no hay evidencia suficiente")));no definido
 	else (if (and (> ?ers 20.0)(> ?pcr 0.5))
-		then (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "radiografia"))
-		else (modify ?diag (resultado "reprogramar consulta") (estudio_solicitado "radiografia")))
+		then (modify ?diag (resultado "realizar estudios") (estudio_solicitado "radiografia"))
+		else (modify ?diag (resultado "realizar estudios") (estudio_solicitado "radiografia")))
 ))
 
 ;ESTUDIOS

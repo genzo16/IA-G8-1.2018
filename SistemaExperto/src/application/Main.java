@@ -232,6 +232,9 @@ public class Main extends Application
 	    	ClipsHandler.getInstance().run();
 			onAvanzar(3);
 			break;
+		case 4:
+			break;
+			
 		default:
 		}
 		
@@ -258,10 +261,16 @@ public class Main extends Application
 			tabContainer.getSelectionModel().select(4);
 			pestaña = 4;// ->pestaña Resultados
 		}else {
-			pestaña = pestaña_actual+1;
-			tabContainer.getSelectionModel().select(pestaña);
-			if(pestaña==4)
-				onMostrarResultados();
+			if(resultado.equals("\"realizar estudios\""))
+			{
+				tabContainer.getSelectionModel().select(4);
+				pestaña = 3;// ->pestaña estudios
+			}else {
+				pestaña = pestaña_actual+1;
+				tabContainer.getSelectionModel().select(pestaña);
+				if(pestaña==4)
+					onMostrarResultados();
+			}
 		}
 	}
 	
