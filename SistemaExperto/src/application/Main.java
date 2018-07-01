@@ -255,7 +255,7 @@ public class Main extends Application
 		ClipsHandler.getInstance().eval("(facts)");
 		System.out.println(resultado);
 		
-		if(resultado.equals("\"derivacion\"") | resultado.equals("\"reprogramar consulta\"") |  resultado.equals("\"diagnostico final\""))
+		if(resultado.equals("\"derivacion\"") | resultado.equals("\"reprogramar consulta\"") |  resultado.equals("\"SPAX\""))
 		{
 			onMostrarResultados();
 			tabContainer.getSelectionModel().select(4);
@@ -263,6 +263,7 @@ public class Main extends Application
 		}else {
 			if(resultado.equals("\"realizar estudios\""))
 			{
+				onMostrarResultados();
 				tabContainer.getSelectionModel().select(4);
 				pestaña = 3;// ->pestaña estudios
 			}else {

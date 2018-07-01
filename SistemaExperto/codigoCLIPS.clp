@@ -212,7 +212,7 @@
 		(case enrojecimiento_manchas then (bind ?return-value "dermatologo"))
 		(default then (bind ?return-value "medico general"))
 	)
-	(modify ?diag (resultado "derivacion")(derivacion ?return-value))
+	(modify ?diag (resultado "derivacion")(derivacion ?return-value)); FIN
 )
 
 ;---------------------------------------------------------------------
@@ -224,9 +224,9 @@
 =>(bind ?flag 0)
 	(foreach  ?e $?ant 
 	(if (and (eq ?e psoriasis)(!= ?flag 1))
-		then (modify ?diag (resultado "Artritis psoriasica")(resultado_espondilitis artritis_psoriasica))(bind ?flag 1));Artritis psoriasica
+		then (modify ?diag (resultado "SPAX" )(resultado_espondilitis artritis_psoriasica))(bind ?flag 1));Artritis psoriasica
 	(if (and (eq ?e infeccion)(!= ?flag 1))
-		then (modify ?diag (resultado "Artritis reactiva")(resultado_espondilitis artritis_reactiva))(bind ?flag 1));Artritis reactiva
+		then (modify ?diag (resultado "SPAX" )(resultado_espondilitis artritis_reactiva))(bind ?flag 1));Artritis reactiva
 	)
 )
 
@@ -367,19 +367,19 @@ else(modify ?diag (resultado "derivar")(resultado_espondilitis espondilitis_nula
 	?diag<-(diagnostico(resultado "categorizar espondilitis")(id_paciente ?id))
 	(paciente(id_paciente ?id)(edad ?edad))
 	(test (< ?edad 16))
-=>(modify ?diag (resultado_espondilitis espodilo_artritis_juvenil)(resultado "diagnostico final")))
+=>(modify ?diag (resultado_espondilitis espodilo_artritis_juvenil)(resultado "SPAX")))
 
 (defrule art_psoriasica
 	?diag<-(diagnostico(resultado "categorizar espondilitis")(id_paciente ?id))
 	(paciente(id_paciente ?id))
 	(enfermedades_preexistentes(enfermedad psoriasis))
-=>(modify ?diag (resultado_espondilitis artritis_psoriasica)(resultado "diagnostico final")))
+=>(modify ?diag (resultado_espondilitis artritis_psoriasica)(resultado "SPAX")))
 
 (defrule col_ulcerosa
 	?diag<-(diagnostico(resultado "categorizar espondilitis")(id_paciente ?id))
 	(paciente(id_paciente ?id))
 	(enfermedades_preexistentes(enfermedad diarrea))
-=>(modify ?diag (resultado_espondilitis colitis_ulcerosa)(resultado "diagnostico final")))
+=>(modify ?diag (resultado_espondilitis colitis_ulcerosa)(resultado "SPAX")))
 
 
 ;-------------------------------------------------------------------------------------------------------
