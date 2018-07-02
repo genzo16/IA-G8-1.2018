@@ -320,7 +320,7 @@ else(modify ?diag (resultado "comprobar comp axial"))))
 )
 
 (defrule radiografia
-	?diag<-(diagnostico(id_diagnostico ?id)(resultado "realizar radiografia"))
+	?diag<-(diagnostico(id_diagnostico ?id)(resultado "realizar estudios")(estudio_solicitado "radiografia"))
 	(estudio (tipo_estudio radiografia)(resultado ?res))
 =>(if (= 0 (str-compare ?res si)) 
 	then (modify ?diag (resultado "categorizar espondilitis"));rx sacroilitis
@@ -328,7 +328,7 @@ else(modify ?diag (resultado "comprobar comp axial"))))
 )
 
 (defrule lab_HLAB27
-	?diag<-(diagnostico(id_diagnostico ?id)(resultado "analisis lab HLAB27"))
+	?diag<-(diagnostico(id_diagnostico ?id)(resultado "realizar estudios")(estudio_solicitado "test HLAB27"))
 	(estudio (tipo_estudio HLAB27)(resultado ?res))
 	(laboratorio(ERS ?ers)(PCR ?pcr))
 =>(if (= 0 (str-compare ?res si)) 

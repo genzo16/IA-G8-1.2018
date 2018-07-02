@@ -155,13 +155,23 @@ public class Main extends Application
 	    	String edad     = this.edad.getText();
 	    	String sexo     = (this.sexo.getValue()).toLowerCase();
 	    	
-	    	entrada = "(paciente(id_paciente 1)(apellido \"" + apellido + "\")(nombre \"" + nombre + "\")(edad " + edad + ")(sexo "+sexo+"))";
-	    	System.out.println(entrada);
-	    	ClipsHandler.getInstance().assertString(entrada);
-	    	
-	    	ClipsHandler.getInstance().assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
-	    	ClipsHandler.getInstance().run();
-			onAvanzar(0);
+	    	List<Diagnostico> diags = actual.getDiagnosticos();//lPacientes.getSelectionModel().getSelectedItem().getDiagnosticos();
+			if(!diags.isEmpty() && diags.get(diags.size()-1).getRecomendacion().equals("\"realizar estudios\"") )
+			{
+			//	ClipsHandler.getInstance().assertString("(retract diagnostico(id_paciente 1)(id_diagnostico 1))");
+			//	ClipsHandler.getInstance().assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
+				pestaña = 3;// ->pestaña estudios
+				tabContainer.getSelectionModel().select(pestaña);
+			}else {
+				ClipsHandler.getInstance().reset();
+				entrada = "(paciente(id_paciente 1)(apellido \"" + apellido + "\")(nombre \"" + nombre + "\")(edad " + edad + ")(sexo "+sexo+"))";
+		    	System.out.println(entrada);
+		    	ClipsHandler.getInstance().assertString(entrada);
+		    	
+		    	ClipsHandler.getInstance().assertString("(diagnostico(id_paciente 1)(id_diagnostico 1))");
+		    	ClipsHandler.getInstance().run();
+				onAvanzar(0);
+			}
 			break;
 		case 1:
 	    	
@@ -237,9 +247,9 @@ public class Main extends Application
 			}
 			if(imagen.isSelected())
 			{
-				if(!radio_resultado.getValue().equals(""))
+				if(!radio_resultado.getValue().equals("-"))
 					ClipsHandler.getInstance().assertString("(estudio (id_estudio 1)(id_paciente 1)(resultado "+radio_resultado.getValue() +")(tipo_estudio radiografia))");
-				if(!reso_resultado.getValue().equals(""))
+				if(!reso_resultado.getValue().equals("-"))
 					ClipsHandler.getInstance().assertString("(estudio (id_estudio 1)(id_paciente 1)(resultado "+reso_resultado.getValue() +")(tipo_estudio resonancia))");	
 			}
 	    	ClipsHandler.getInstance().run();
@@ -250,17 +260,17 @@ public class Main extends Application
 			MultifieldValue pv=null;
 			// Obtener resultados de CLIPS
 			// DOLOR
-			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
+		/*	pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
 			try {
 				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();
-				m_dolor = new Dolor(null, fav.getFactSlot("tipo").toString()
-						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
-						, fav.getFactSlot("condicion_alivio").toString()
-						, fav.getFactSlot("recurrencia").intValue());
-			} catch (Exception e1) {
+				resultado = fav.getFactSlot("resultado").toString();*/
+//				m_dolor = new Dolor(null, fav.getFactSlot("tipo").toString()
+//						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
+//						, fav.getFactSlot("condicion_alivio").toString()
+//						, fav.getFactSlot("recurrencia").intValue());
+		/*	} catch (Exception e1) {
 				System.out.println("Failure with CLIPS output.");
-			}
+			}*/
 		//	ClipsHandler.getInstance().eval("(facts)");
 			
 			// DIAGNOSTICO
@@ -277,13 +287,13 @@ public class Main extends Application
 			// ANTECEDENTES
 /*			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
 			try {
-				FactAddressValue fav =(FactAddressValue)pv.get(0);
-				resultado = fav.getFactSlot("resultado").toString();
-				m_antecedentes = new Antecedentes(null, fav.getFactSlot("tipo").toString()
-						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
-						, fav.getFactSlot("condicion_alivio").toString()
-						, fav.getFactSlot("recurrencia").intValue());
-			} catch (Exception e1) {
+				FactAddressValue fav =(FactAddressValue)pv.get(0);*/
+//				resultado = fav.getFactSlot("resultado").toString();
+//				m_antecedentes = new Antecedentes(null, fav.getFactSlot("tipo").toString()
+//						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
+//						, fav.getFactSlot("condicion_alivio").toString()
+//						, fav.getFactSlot("recurrencia").intValue());
+/*			} catch (Exception e1) {
 				System.out.println("Failure with CLIPS output.");
 			}
 			//ANALISIS
@@ -333,7 +343,7 @@ public class Main extends Application
 			{
 				onMostrarResultados();
 				tabContainer.getSelectionModel().select(4);
-				pestaña = 3;// ->pestaña estudios
+				pestaña = 4;// ->pestaña estudios
 			}else {
 				pestaña = pestaña_actual+1;
 				tabContainer.getSelectionModel().select(pestaña);
@@ -353,7 +363,7 @@ public class Main extends Application
 				diagnostico.setText("indeterminado");
 			else
 				diagnostico.setText(spax);
-			sospecha.setText(fav.getFactSlot("grado_de_confianza").toString());
+			sospecha.setText(fav.getFactSlot("resultado_espondilitis").toString());
 			derivacion.setText(fav.getFactSlot("derivacion").toString().replaceAll("\"", ""));
 			estudio_solicitado.setText(fav.getFactSlot("estudio_solicitado").toString().replaceAll("\"", ""));
 			dolor_si_no.setText(fav.getFactSlot("dolor_lumbar_inflamatorio").toString().replaceAll("\"", ""));
@@ -380,15 +390,21 @@ public class Main extends Application
 	@FXML
 	void onClear(ActionEvent event) {
 		System.out.println("onClear");
-		ClipsHandler.getInstance().reset();
-		tabContainer.getSelectionModel().select(0);
-		pestaña = 0;// ->pestaña Estudios
-		tf1.getChildren().clear();
-		tf2.getChildren().clear();
-		
-		List<Diagnostico> diags = lPacientes.getSelectionModel().getSelectedItem().getDiagnosticos();
+		List<Diagnostico> diags = actual.getDiagnosticos();//lPacientes.getSelectionModel().getSelectedItem().getDiagnosticos();
 		if(!diags.isEmpty())
   		  diag_paciente.setText(diags.get(diags.size()-1).toString());
+		
+		if(!diags.isEmpty() && diags.get(diags.size()-1).getRecomendacion().equals("\"realizar estudios\""))
+		{	
+			
+		}else {
+			ClipsHandler.getInstance().reset();
+		}
+//		tf1.getChildren().clear();
+//		tf2.getChildren().clear();
+
+		tabContainer.getSelectionModel().select(0);
+		pestaña = 0;// ->pestaña Estudios
 	}
 	
 	@FXML
