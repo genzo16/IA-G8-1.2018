@@ -19,19 +19,19 @@ public class Antecedentes   implements Serializable
 	 */
 	private static final long serialVersionUID = -3991634440237184165L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ANTECEDENTE_ID")
 	private Integer antecedente_id;
 	@Column(name="ENFERMEDAD")
 	private String enfermedad;
 	@Column(name="TIPO_ANTECEDENTE")
-	private int tipo_antecedente;
+	private String tipo_antecedente;
 	
 	public Antecedentes() {
 		super();
 	}
 	
-	public Antecedentes(Integer antecedente_id, String enfermedad, int tipo_antecedente) {
+	public Antecedentes(Integer antecedente_id, String enfermedad, String tipo_antecedente) {
 		super();
 		this.antecedente_id = antecedente_id;
 		this.enfermedad = enfermedad;
@@ -49,10 +49,10 @@ public class Antecedentes   implements Serializable
 	public void setEnfermedad(String enfermedad) {
 		this.enfermedad = enfermedad;
 	}
-	public int getTipo_antecedente() {
-		return tipo_antecedente;
+	public TIPO_ANTECEDENTE getTipo_antecedente() {
+		return TIPO_ANTECEDENTE.valueOf(tipo_antecedente);
 	}
-	public void setTipo_antecedente(int tipo_antecedente) {
-		this.tipo_antecedente = tipo_antecedente;
+	public void setTipo_antecedente(TIPO_ANTECEDENTE tipo_antecedente) {
+		this.tipo_antecedente = tipo_antecedente.name();
 	}
 }

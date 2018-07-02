@@ -20,13 +20,13 @@ public class Analisis  implements Serializable
 	 */
 	private static final long serialVersionUID = -7422857790964899147L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ANALISIS_ID")
 	private int id_analisis;
 	@Column(name="NOMBRE")
 	private String nombre;
 	@Column(name="TIPO_ANALISIS")
-	private TIPO_ANALISIS tipo_analisis;
+	private String tipo_analisis;
 	@Column(name="RESULTADO")
 	private String resultado;
 	
@@ -34,7 +34,7 @@ public class Analisis  implements Serializable
 		super();
 	}
 
-	public Analisis(Integer id_analisis, String nombre, TIPO_ANALISIS tipo_analisis, String resultado) {
+	public Analisis(Integer id_analisis, String nombre, String tipo_analisis, String resultado) {
 		super();
 		this.id_analisis = id_analisis;
 		this.nombre = nombre;
@@ -59,11 +59,11 @@ public class Analisis  implements Serializable
 	}
 
 	public TIPO_ANALISIS getTipo_analisis() {
-		return tipo_analisis;
+		return TIPO_ANALISIS.valueOf(tipo_analisis);
 	}
 
 	public void setTipo_analisis(TIPO_ANALISIS tipo_analisis) {
-		this.tipo_analisis = tipo_analisis;
+		this.tipo_analisis = tipo_analisis.name();
 	}
 
 	public String getResultado() {

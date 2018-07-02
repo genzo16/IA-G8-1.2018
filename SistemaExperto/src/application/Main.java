@@ -6,20 +6,27 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.List;
 
 import CLIPSJNI.FactAddressValue;
 import CLIPSJNI.MultifieldValue;
 import derbySQL.Derby;
 import hibernate.HibernateUtils;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import model.Analisis;
+import model.Antecedentes;
+import model.Diagnostico;
+import model.Dolor;
 import model.Paciente;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
@@ -51,6 +58,8 @@ public class Main extends Application
 	private TextField edad;
 	@FXML // fx:id="sexo"
 	private ChoiceBox<String> sexo;
+	@FXML
+	private TextArea diag_paciente;
 	
 	@FXML
 	private ChoiceBox<Paciente> lPacientes;
@@ -126,6 +135,10 @@ public class Main extends Application
 	
 	// Este es el paciente cargado actualmente
 	private Paciente actual = null;
+	private Antecedentes m_antecedentes = null;
+	private Diagnostico m_diagnostico = null;
+	private Dolor m_dolor = null;
+	private Analisis m_analisis = null;
 	
 	
 	@FXML
@@ -214,13 +227,13 @@ public class Main extends Application
 			{
 				String fact = "(estudio (id_estudio 1)(id_paciente 1)(resultado "+gen_resultado.getValue() +")(tipo_estudio HLAB27))";
 				System.out.println(fact);
-				ClipsHandler.getInstance().assertString(fact);
+		//		ClipsHandler.getInstance().assertString(fact);
 			}
 			if(sangre.isSelected())
 			{
 				String fact = "(laboratorio (id_laboratorio 1)(ERS "+sangre_ers.getText()+")(PCR "+sangre_pcr.getText()+"))";
 				System.out.println(fact);
-				ClipsHandler.getInstance().assertString(fact);
+		//		ClipsHandler.getInstance().assertString(fact);
 			}
 			if(imagen.isSelected())
 			{
@@ -233,6 +246,61 @@ public class Main extends Application
 			onAvanzar(3);
 			break;
 		case 4:
+			String resultado=null;
+			MultifieldValue pv=null;
+			// Obtener resultados de CLIPS
+			// DOLOR
+			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
+			try {
+				FactAddressValue fav =(FactAddressValue)pv.get(0);
+				resultado = fav.getFactSlot("resultado").toString();
+				m_dolor = new Dolor(null, fav.getFactSlot("tipo").toString()
+						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
+						, fav.getFactSlot("condicion_alivio").toString()
+						, fav.getFactSlot("recurrencia").intValue());
+			} catch (Exception e1) {
+				System.out.println("Failure with CLIPS output.");
+			}
+		//	ClipsHandler.getInstance().eval("(facts)");
+			
+			// DIAGNOSTICO
+			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J diagnostico))TRUE)");	
+			try {
+				FactAddressValue fav =(FactAddressValue)pv.get(0);
+				resultado = fav.getFactSlot("resultado").toString();
+				m_diagnostico = new Diagnostico(null, actual.getId_paciente(), fav.getFactSlot("resultado_espondilitis").toString()
+						, fav.getFactSlot("resultado").toString()
+						, fav.getFactSlot("estudio_solicitado").toString());
+			} catch (Exception e1) {
+				System.out.println("Failure with CLIPS output.");
+			}
+			// ANTECEDENTES
+/*			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
+			try {
+				FactAddressValue fav =(FactAddressValue)pv.get(0);
+				resultado = fav.getFactSlot("resultado").toString();
+				m_antecedentes = new Antecedentes(null, fav.getFactSlot("tipo").toString()
+						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
+						, fav.getFactSlot("condicion_alivio").toString()
+						, fav.getFactSlot("recurrencia").intValue());
+			} catch (Exception e1) {
+				System.out.println("Failure with CLIPS output.");
+			}
+			//ANALISIS
+			pv =(MultifieldValue) ClipsHandler.getInstance().eval("(find-all-facts((?J dolor))TRUE)");	
+			try {
+				FactAddressValue fav =(FactAddressValue)pv.get(0);
+				resultado = fav.getFactSlot("resultado").toString();
+				m_analisis = new Analisis(null, fav.getFactSlot("tipo").toString()
+						, fav.getFactSlot("zona").toString(), fav.getFactSlot("inicio_dolor").toString()
+						, fav.getFactSlot("condicion_alivio").toString()
+						, fav.getFactSlot("recurrencia").intValue());
+			} catch (Exception e1) {
+				System.out.println("Failure with CLIPS output.");
+			}*/
+			actual.getDiagnosticos().add(m_diagnostico);
+			Paciente.saveOrUpdate(actual);
+			ActualizarListaPacientes(null);
 			break;
 			
 		default:
@@ -315,6 +383,12 @@ public class Main extends Application
 		ClipsHandler.getInstance().reset();
 		tabContainer.getSelectionModel().select(0);
 		pestaña = 0;// ->pestaña Estudios
+		tf1.getChildren().clear();
+		tf2.getChildren().clear();
+		
+		List<Diagnostico> diags = lPacientes.getSelectionModel().getSelectedItem().getDiagnosticos();
+		if(!diags.isEmpty())
+  		  diag_paciente.setText(diags.get(diags.size()-1).toString());
 	}
 	
 	@FXML
@@ -335,10 +409,10 @@ public class Main extends Application
 	@FXML
 	void ActualizarListaPacientes(ActionEvent event) 
 	{		
-		lPacientes.getItems().clear();
+	/*	lPacientes.getItems().clear();
 		for(Paciente p :HibernateUtils.listPacientes()) // DerbyUtils.LoadPacientes()
 			lPacientes.getItems().add(p);
-		lPacientes.getSelectionModel().selectFirst();
+		lPacientes.getSelectionModel().selectFirst();*/
 	}
 	
 	@FXML
@@ -348,23 +422,21 @@ public class Main extends Application
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-		if(actual == null)
+		if(Integer.parseInt(nro_afiliado.getText())==0)
 		{
 			actual = new Paciente(null, dni.getText(), nombre.getText(), apellido.getText(),
 					Integer.parseInt(edad.getText()), date, sexo.getSelectionModel().getSelectedItem());
+			Paciente.saveOrUpdate(actual);
+			lPacientes.getItems().add(actual);
+		}else{
+			actual.setApellido(apellido.getText());
+			actual.setNombre(nombre.getText());
+			actual.setDNI(dni.getText());
+			actual.setEdad(Integer.parseInt(edad.getText()));
+			actual.setSexo(sexo.getSelectionModel().getSelectedItem());
+			Paciente.saveOrUpdate(actual);
 		}
-		actual.setId_paciente(Integer.parseInt(nro_afiliado.getText()));
-		if(actual.getId_paciente()==0) 
-		{
-			actual.setId_paciente(null);
-		}
-		actual.setApellido(apellido.getText());
-		actual.setNombre(nombre.getText());
-		actual.setDNI(dni.getText());
-		actual.setEdad(Integer.parseInt(edad.getText()));
-		actual.setSexo(sexo.getSelectionModel().getSelectedItem());
-		Paciente.saveOrUpdate(actual);
-		ActualizarListaPacientes(null);
+	//	ActualizarListaPacientes(null);
 	}
 	
 	
@@ -375,7 +447,27 @@ public class Main extends Application
 		Derby.getInstance().initialize();
 		ClipsHandler.init();
 		HibernateUtils.getSessionFactory();
-		ActualizarListaPacientes(null);
+		
+		lPacientes.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<? super Number>) new ChangeListener<Number>() {
+		      @Override
+		      public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) 
+		      {
+		    	  diag_paciente.setText("No hay consultas previas.");
+		    	  if(lPacientes == null)
+		    		  return;
+		    	  List<Diagnostico> diags = lPacientes.getItems().get(number2.intValue()).getDiagnosticos();
+		    	  if(diags == null)
+		    		  return;
+		    	  if(!diags.isEmpty())
+		    		  diag_paciente.setText(diags.get(diags.size()-1).toString());
+		      }
+		    });
+		
+		for(Paciente p :HibernateUtils.listPacientes()) // DerbyUtils.LoadPacientes()
+			lPacientes.getItems().add(p);
+		lPacientes.getSelectionModel().selectFirst();
+		
+		
 	}
 	
 	@Override

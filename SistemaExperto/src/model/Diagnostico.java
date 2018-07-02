@@ -21,13 +21,15 @@ public class Diagnostico  implements Serializable
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="DIAGNOSTICO_ID")
 	private Integer id_diagnostico;
+	@Column(name="PACIENTE_ID")
+	private Integer id_paciente;
 	@Column(name="ESSPAX")
 	private String esSPAX;
 	@Column(name="RECOMENDACION")
 	private String recomendacion;
 	@Column(name="ENFERMEDAD")
 	private String enfermedad;
-	
+	/*
 	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name="ANALISIS_ID")
@@ -39,18 +41,29 @@ public class Diagnostico  implements Serializable
 	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name="ANTECEDENTE_ID")
+	private List<Antecedentes> antecedentes;*/
+	@Transient
+	private List<Dolor> dolores;
+	@Transient
+	private List<Analisis> analisis;
+	@Transient
 	private List<Antecedentes> antecedentes;
 	
 	public Diagnostico() {
 		super();
+		analisis = new ArrayList<Analisis>();
+		dolores = new ArrayList<Dolor>();
+		antecedentes = new ArrayList<Antecedentes>();
+		
 	}
 
-	public Diagnostico(Integer id_diagnostico, String esSPAX, String recomendacion, String enfermedad) {
+	public Diagnostico(Integer id_diagnostico,Integer id_paciente, String esSPAX, String recomendacion, String enfermedad) {
 		super();
 		this.id_diagnostico = id_diagnostico;
 		this.esSPAX = esSPAX;
 		this.recomendacion = recomendacion;
 		this.enfermedad = enfermedad;
+		this.id_paciente = id_paciente;
 		
 		analisis = new ArrayList<Analisis>();
 		dolores = new ArrayList<Dolor>();
@@ -113,5 +126,16 @@ public class Diagnostico  implements Serializable
 		this.antecedentes = antecedentes;
 	}
 
+	@Override
+	public String toString() {
+		String resumen = "";
+		resumen += "SPAX: "+this.esSPAX +"\n"
+		+"Resultado: "+this.recomendacion +"\n"
+		+"Estudios solicitados: "+this.enfermedad +"\n";
+		return resumen;
+	//	return super.toString();
+	}
+
+	
 	
 }

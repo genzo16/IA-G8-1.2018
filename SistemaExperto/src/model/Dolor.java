@@ -22,7 +22,7 @@ public class Dolor  implements Serializable
 	 */
 	private static final long serialVersionUID = -8106436433072455988L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="DOLOR_ID")
 	private Integer id_dolencia;
 	@Column(name="TIPO")

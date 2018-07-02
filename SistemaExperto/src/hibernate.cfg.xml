@@ -17,5 +17,9 @@
          jdbc:derby:DerbyDB;create=true
       </property>
       
+      <property name = "hbm2ddl.auto">
+         validate
+      </property>
+      
    </session-factory>
 </hibernate-configuration>

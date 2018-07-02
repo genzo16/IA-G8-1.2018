@@ -20,6 +20,7 @@ public class HibernateUtils {
     private HibernateUtils() {}
 
     private static final SessionFactory sessionFactory;
+    private static Session session;
 
     static {
         try {
@@ -31,6 +32,7 @@ public class HibernateUtils {
             config.addAnnotatedClass(Paciente.class);
             
             sessionFactory = config.buildSessionFactory();
+            session = HibernateUtils.getSessionFactory().openSession();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
@@ -41,18 +43,19 @@ public class HibernateUtils {
         return sessionFactory;
     }
     
+    
    public static void shutdown() {
-        
+	 //   session.close();
         getSessionFactory().close();
     }    
    
    
    public static List<Paciente> listPacientes()
    {
-	      Session session = HibernateUtils.getSessionFactory().openSession();
 	      Transaction tx = null;
 	      List<Paciente> pacientes = new ArrayList<Paciente>();
 	      try {
+	    	  session = HibernateUtils.getSessionFactory().openSession();
 	         tx = session.beginTransaction();
 	         for(Object o :session.createQuery("FROM Paciente").list())
 	        	 pacientes.add((Paciente)o);

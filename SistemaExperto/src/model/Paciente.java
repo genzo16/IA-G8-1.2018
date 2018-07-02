@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
+//import org.hibernate.annotations.CascadeType;
 import org.hibernate.Session;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -44,10 +46,16 @@ public class Paciente implements Serializable
 	@Column(name ="SEXO")
 	private String Sexo;
 
-	@OneToMany(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@OneToMany(fetch= FetchType.EAGER, cascade={CascadeType.ALL})
+        /*    CascadeType.PERSIST, 
+            CascadeType.REMOVE})*/
+//	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@Fetch(value = FetchMode.SUBSELECT)
-	@JoinColumn(name="DIAGNOSTICO_ID")
+	@JoinColumn(name="PACIENTE_ID")
 	private List<Diagnostico> diagnosticos;
+	
+	@Transient
+	private static Session session;
 	
 	public Paciente(Integer id_paciente, String dNI, String nombre, String apellido, int edad, Date fecha,
 			String sexo) {
@@ -64,6 +72,8 @@ public class Paciente implements Serializable
 	}
 	
 	public Paciente() {
+		super();
+		diagnosticos = new ArrayList<Diagnostico>();
 	}
 	
 	/* Getters & Setters */
@@ -138,39 +148,59 @@ public class Paciente implements Serializable
 
 	public static void saveOrUpdate(Paciente paciente) 
 	{    
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.saveOrUpdate(paciente);
-            session.getTransaction().commit();
-            session.close();
+        try
+        {
+        	session = HibernateUtils.getSessionFactory().openSession();
+        	session.beginTransaction();
+        	session.saveOrUpdate(paciente);
+        	session.getTransaction().commit();
+            
         }finally {
-	          
+        	session.close();
 	      }
     }
 	
 	public static void persist(Paciente paciente) 
 	{    
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.persist(paciente);
-            session.getTransaction().commit();
-            session.close();
+		 try
+	        {
+	        	session = HibernateUtils.getSessionFactory().openSession();
+        	session.beginTransaction();
+        	session.persist(paciente);
+        	session.getTransaction().commit();
+            
         }finally {
-	          
+        	session.close();
 	      }
     }
 	
 	public static Paciente load(int id_paciente) 
 	{    
 		Paciente p = null;
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            session.beginTransaction();
+		 try
+	        {
+	        	session = HibernateUtils.getSessionFactory().openSession();
+	        	session.beginTransaction();
             p = session.get(Paciente.class, id_paciente);
             session.getTransaction().commit();
-            session.close();
-        }finally {
+       }finally {
+        session.close();
 	      }
         return p;
     }
+
+	public static void update(Paciente actual) {
+		try
+        {
+        	session = HibernateUtils.getSessionFactory().openSession();
+    	session.beginTransaction();
+    	session.update(actual);
+    	session.getTransaction().commit();
+        
+    }finally {
+    	session.close();
+      }
+		
+	}
 	
 }
